@@ -1,0 +1,129 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Color */
+
+.bg-red-light {
+    background-color: #CC1100;
+}
+
+.bg-red-dark {
+    background-color: #80100E;
+}
+
+.bg-green {
+    background-color: #8DA023;
+}
+
+.bg-yellow {
+    background-color: #FBF6EC;
+}
+
+/* Button */
+
+.btn-order {
+    color:#FFFFFF;
+    border:none;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 50px;
+    max-height: 50px;
+}
+
+.btn-register {
+    color: #FFFFFF;
+    border: none;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 50px;
+    max-height: 50px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.btn-register:hover {
+    background-color: #5A6617;
+}
+
+.btn-view {
+    color: #FFFFFF;
+    border: none;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 40px;
+    max-height: 40px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn-view:hover {
+    background-color: #80100E;
+}
+
+.btn-sign-in {
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn-sign-in:hover {
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    background-color: #80100E;
+}
+
+/* Label */
+
+.lb-navbar {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.lb-title {
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.lb-description {
+    font-size: 17px;
+}
+
+.lb-menu {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.lb-title-menu {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.lb-description-menu {
+    font-size: 16px;
+}
+
+.lb-price-menu {
+    font-size: 22px;
+    font-weight: 600;
+    color: #80100E;
+}
+
+lb-footer {
+    font-size: 17px;
+}
+
+.info-order-footer {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-size:20px;
+}
