@@ -247,9 +247,9 @@
       <Project>{244e0da0-062f-4ec8-9b75-4a0a71d79791}</Project>
       <Name>Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Service\WebService.csproj">
+    <ProjectReference Include="..\Service\Service.csproj">
       <Project>{6fa47223-10e2-45cc-bb25-b4949fd37687}</Project>
-      <Name>WebService</Name>
+      <Name>Service</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

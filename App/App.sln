@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{244E0DA0-062F-4EC8-9B75-4A0A71D79791}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebService", "Service\WebService.csproj", "{6FA47223-10E2-45CC-BB25-B4949FD37687}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{6FA47223-10E2-45CC-BB25-B4949FD37687}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurateur", "Restaurateur\Restaurateur.csproj", "{D8A43312-2805-4F18-8E9A-7D9FB55717A8}"
 EndProject
