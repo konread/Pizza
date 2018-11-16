@@ -6,18 +6,12 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Pizza
+    public class OfferPizza
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
 
-        public void initPrice(List<Ingredient> ingredients)
-        {
-            foreach(Ingredient ingredient in ingredients)
-            {
-                this.Price += ingredient.Price;
-            }
-        }
+        public List<Ingredient> Ingredients { get; set; }
     }
 }

@@ -13,21 +13,21 @@ namespace Client {
     public partial class _Default {
         
         /// <summary>
-        /// Kontrolka BtnView.
+        /// Kontrolka BtnBasket.
         /// </summary>
         /// <remarks>
         /// Pole generowane automatycznie.
         /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnView;
+        protected global::System.Web.UI.WebControls.Button BtnBasket;
         
         /// <summary>
-        /// Kontrolka LvListPizzas.
+        /// Kontrolka LvListOffersPizza.
         /// </summary>
         /// <remarks>
         /// Pole generowane automatycznie.
         /// By zmodyfikować deklaracje pola przenieś ją z pliku projektanta do pliku codebehind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView LvListPizzas;
+        protected global::System.Web.UI.WebControls.ListView LvListOffersPizza;
     }
 }

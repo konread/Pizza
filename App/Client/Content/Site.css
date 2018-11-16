@@ -26,15 +26,25 @@
     background-color: #FBF6EC;
 }
 
+.bg-gray {
+    background-color: #f7f7f7;
+}
+
 /* Button */
 
 .btn-order {
-    color:#FFFFFF;
-    border:none;
+    color: #FFFFFF;
+    border: none;
     min-width: 100%;
     max-width: 100%;
     min-height: 50px;
     max-height: 50px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.btn-order:hover {
+    background-color: #5A6617;
 }
 
 .btn-register {
@@ -82,6 +92,22 @@
     background-color: #80100E;
 }
 
+.btn-cancel-address {
+    border: 1px solid #dfdfdf;
+    background-color: #f7f7f7;
+}
+
+.btn-accept-address {
+    color: #FFFFFF;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn-accept-address:hover {
+    background-color: #5A6617;
+}
+
 /* Label */
 
 .lb-navbar {
@@ -122,8 +148,70 @@ lb-footer {
     font-size: 17px;
 }
 
+.lb-label-basket-partial-summary {
+    font-size: 16px;
+}
+
+.lb-price-basket-partial-summary {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.lb-currency-basket-partial-summary {
+    font-size: 14px;
+}
+
+.lb-label-basket-summary {
+    font-size: 18px;
+}
+
+.lb-price-basket-summary {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.lb-currency-basket-summary {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.lb-title-basket-order {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.lb-price-basket-order {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.lb-title-order {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.lb-price-order {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.lb-currency-order {
+    font-size: 20px;
+    font-weight: 600;
+}
+
 .info-order-footer {
     background-color: #FFFFFF;
     color: #000000;
-    font-size:20px;
+    font-size: 20px;
+}
+
+.close {
+    color: #fff;
+    opacity: 1;
+}
+
+.close:hover {
+    color: #fff;
+    opacity: 1;
 }

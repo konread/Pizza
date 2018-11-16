@@ -135,15 +135,11 @@ C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Microsoft.CodeDom.
 C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Microsoft.ScriptManager.MSAjax.dll
 C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Microsoft.ScriptManager.WebForms.dll
 C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Model.exe
 C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Newtonsoft.Json.dll
-C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Service.exe
 C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\System.Web.Optimization.dll
 C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\WebGrease.dll
 C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Model.pdb
-C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Model.exe.config
 C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Service.pdb
-C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Service.exe.config
 C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\System.Web.Optimization.xml
 C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Newtonsoft.Json.xml
 C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Antlr3.Runtime.pdb
@@ -156,3 +152,7 @@ C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\obj\Debug\Client.cspro
 C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\obj\Debug\Client.csproj.CopyComplete
 C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\obj\Debug\Client.dll
 C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\obj\Debug\Client.pdb
+C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Service.dll
+C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Service.dll.config
+C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Model.dll
+C:\Users\Damian\Desktop\Student Projects\pizza\App\Client\bin\Model.dll.config

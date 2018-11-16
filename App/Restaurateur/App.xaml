@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Restaurateur"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <SolidColorBrush x:Key="PrimaryBrush" Color="#FF4169AA" />
+        <SolidColorBrush x:Key="PrimaryFont" Color="White" />
     </Application.Resources>
 </Application>

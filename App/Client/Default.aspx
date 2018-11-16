@@ -10,13 +10,13 @@
                 <div class="col-lg-4">
                     <h1 class="lb-title">Zamów jedzenie online!</h1>
                     <p class="lb-description">Jesteś głodny lub po prostu masz ochotę na coś pysznego? Może chcesz spróbować dobrego jedzenia, nie wychodząc z domu? PełenBrzuszek to serwis do zamawiania jedzenia online. Zamawiaj jedzenie z dowozem do domu tylko przez Internet!</p>
-                    <asp:Button ID="BtnView" runat="server" Text="Koszyk" CssClass="btn btn-register bg-green"/>
+                    <asp:Button ID="BtnBasket" runat="server" Text="Koszyk" CssClass="btn btn-register bg-green" OnClick="BtnBasket_Click"/>
                 </div>
             </div>
 
             <hr class="mb-4"/>
 
-            <asp:ListView ID="LvListPizzas" ItemPlaceholderID="itemPlaceHolder" GroupPlaceholderID="groupPlaceHolder" GroupItemCount="3" runat="server">
+            <asp:ListView ID="LvListOffersPizza" ItemPlaceholderID="itemPlaceHolder" GroupPlaceholderID="groupPlaceHolder" GroupItemCount="3" runat="server">
                 <LayoutTemplate>
                     <asp:PlaceHolder ID="groupPlaceHolder" runat="server"></asp:PlaceHolder>
                 </LayoutTemplate>
@@ -40,11 +40,11 @@
                             <div class="card-footer bg-yellow">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <asp:Button ID="BtnPizzaDetails" runat="server" Text="Zobacz" OnClick="BtnPizzaDetails_Click" CssClass="btn bg-red-light btn-view" commandArgument='<%# Container.DataItemIndex%>'/>
+                                        <asp:Button ID="BtnOfferDetails" runat="server" Text="Zobacz" OnClick="BtnOfferDetails_Click" CssClass="btn bg-red-light btn-view" commandArgument='<%# Container.DataItemIndex%>'/>
                                     </div>
                                     <div class="col-sm-6 text-right">
                                         <asp:Label ID="LbPrice" runat="server" Text=<%# Eval("Price") %> CssClass="lb-price-menu"></asp:Label> 
-                                        <asp:Label ID="LbCurrency" runat="server" Text="PLN"></asp:Label>
+                                        <asp:Label ID="LbCurrency" runat="server" Text=",00 PLN"></asp:Label>
                                     </div>
                                 </div>
                             </div>

@@ -14,27 +14,40 @@ namespace Client
         {
             if (!IsPostBack)
             {
-                List<Pizza> listPizzas = WebService.Data.GetListPizzas();
+                List<OfferPizza> listOffersPizza = WebService.Data.GetListOffersPizza();
+                List<Ingredient> listIngredientsAll = WebService.Data.GetListIngredientsAll();
 
-                Helper.Session.SetListPizzas(Session, listPizzas);
+                Helper.HelperSession.SetListOffersPizza(Session, listOffersPizza);
+                Helper.HelperSession.SetListIngredientsAll(Session, listIngredientsAll);
 
-                LvListPizzas.DataSource = listPizzas;
-                LvListPizzas.DataBind();
+                if(Helper.HelperSession.GetListOrdersPizza(Session) == null)
+                {
+                    List<OrderPizza> listOrders = new List<OrderPizza>();
+                    Helper.HelperSession.SetListOrdersPizza(Session, listOrders);
+                }
+
+                LvListOffersPizza.DataSource = listOffersPizza;
+                LvListOffersPizza.DataBind();
             }
         }
 
-        protected void BtnPizzaDetails_Click(object sender, EventArgs e)
+        protected void BtnOfferDetails_Click(object sender, EventArgs e)
         {
-            Button btnPizzaDetails = (Button) sender;
+            Button btnOfferDetails = (Button) sender;
 
-            int index = Convert.ToInt32(btnPizzaDetails.CommandArgument.ToString());
+            int index = Convert.ToInt32(btnOfferDetails.CommandArgument.ToString());
 
-            List<Pizza> listPizzas = Helper.Session.GetListPizzas(Session);
-            Pizza pizza = listPizzas[index];
+            List<OfferPizza> listOffersPizza = Helper.HelperSession.GetListOffersPizza(Session);
+            OfferPizza offer = listOffersPizza[index];
 
-            Helper.Session.SetPizza(Session, pizza);
+            Helper.HelperSession.SetOfferPizza(Session, offer);
 
-            Response.Redirect("PizzaDetails.aspx");
+            Response.Redirect("OfferDetails.aspx");
+        }
+
+        protected void BtnBasket_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Basket.aspx");
         }
     }
 }

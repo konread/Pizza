@@ -20,9 +20,13 @@ namespace Restaurateur
     /// </summary>
     public partial class MainWindow : Window
     {
+        public enum OrderStatus { None, New, Processing, Shipped, Received };
+
         public MainWindow()
         {
             InitializeComponent();
+
+            DgListOrders.ItemsSource = WebService.Data.GetListOrder();
         }
     }
 }
