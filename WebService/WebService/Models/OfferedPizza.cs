@@ -10,6 +10,8 @@ namespace WebService.Models
         [Key]
         public int Id_Offered_Pizza { get; set; }
 
+        [StringLength(50)]
+        [Index(IsUnique = true)]
         public string Name { get; set; }
         public double Price { get; set; }
 

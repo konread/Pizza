@@ -15,7 +15,7 @@ namespace WebService.Models
         public double Price { get; set; }
 
         public virtual ICollection<IngredientOfOrderedPizza> IngredientsOfOrderedPizza { get; set; }
-        public virtual Order Order { get; set; }
+        public virtual Order Orders { get; set; }
 
         public OrderedPizza() { }
     }

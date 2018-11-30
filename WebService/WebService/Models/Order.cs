@@ -16,8 +16,8 @@ namespace WebService.Models
         public int Order_Date { get; set; }
         public string Status { get; set; }
 
-        public virtual Customer Customer { get; set; }
-        public virtual ICollection<OrderedPizza> OrderedPizzaa { get; set; }
+        public virtual Customer Customers { get; set; }
+        public virtual ICollection<OrderedPizza> OrderedPizzas { get; set; }
 
         public Order() { }
     }

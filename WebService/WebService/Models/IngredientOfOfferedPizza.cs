@@ -14,8 +14,8 @@ namespace WebService.Models
         [ForeignKey("Ingredients")]
         public int Id_Ingredient { get; set; }
 
-        public virtual OfferedPizza OfferedPizza { get; set; }
-        public virtual Ingredient Ingredient { get; set; }
+        public virtual OfferedPizza OfferedPizzas { get; set; }
+        public virtual Ingredient Ingredients { get; set; }
 
         public IngredientOfOfferedPizza() { }
     }
