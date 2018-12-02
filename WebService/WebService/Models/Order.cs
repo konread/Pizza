@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,7 +14,10 @@ namespace WebService.Models
         [ForeignKey("Customers")]
         public int Id_Customer { get; set; }
         public double Price { get; set; }
-        public int Order_Date { get; set; }
+
+        [DisplayFormat(DataFormatString = "{DD-MM-YYYY}")]
+        [DataType(DataType.Date)]
+        public DateTime Order_Date { get; set; }
         public string Status { get; set; }
 
         public virtual Customer Customers { get; set; }
