@@ -16,6 +16,7 @@ namespace WebService.Controllers
     {
         private PizzaDbContext db = new PizzaDbContext();
 
+        // api/OfferedPizza/GetAll
         [HttpGet]
         [Route("api/OfferedPizza/GetAll")]
         public IQueryable<OfferedPizza> GetAll()
@@ -23,6 +24,7 @@ namespace WebService.Controllers
             return db.OfferedPizzas;
         }
 
+        // api/OfferedPizza/Get/1
         [HttpGet]
         [Route("api/OfferedPizza/Get/{id}")]
         [ResponseType(typeof(OfferedPizza))]
@@ -37,6 +39,7 @@ namespace WebService.Controllers
             return Ok(offeredPizza);
         }
 
+        // api/OfferedPizza/Delete/1
         [HttpDelete]
         [Route("api/OfferedPizza/Delete/{id}")]
         [ResponseType(typeof(void))]
