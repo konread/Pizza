@@ -8,6 +8,7 @@ namespace WebService.Context
         public PizzaDbContext()
             : base("name=PizzaDbContext")
         {
+            Configuration.ProxyCreationEnabled = false;
         }
 
         public DbSet<Customer> Customers { get; set; }
