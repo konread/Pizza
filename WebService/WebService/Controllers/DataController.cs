@@ -52,10 +52,10 @@ namespace WebService.Controllers
             try
             {
                 await db.SaveChangesAsync();
-            } catch(DbUpdateConcurrencyException ex)
+            }
+            catch (DbUpdateConcurrencyException ex)
             {
-                System.Console.WriteLine(ex.Message);
-                throw;
+                return BadRequest(ex.Message);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -98,8 +98,7 @@ namespace WebService.Controllers
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                System.Console.WriteLine(ex.Message);
-                throw;
+                return BadRequest(ex.Message);
             }
 
             foreach (var pwingr in PizzaWithIngredients)
@@ -111,7 +110,7 @@ namespace WebService.Controllers
                     var existedIngredient = db.Ingredients.SingleOrDefault(r => r.Name == ingr);
                     if (existedIngredient == null)
                     {
-                        throw new HttpException(404, "Ingredient "+ingr+" doesn't exist in database!");
+                        return BadRequest("Ingredient " + ingr + " doesn't exist in database!");
                     }
 
                     price += existedIngredient.Price;
@@ -138,8 +137,7 @@ namespace WebService.Controllers
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                System.Console.WriteLine(ex.Message);
-                throw;
+                return BadRequest(ex.Message);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
