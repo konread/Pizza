@@ -14,6 +14,7 @@ namespace WebService.Controllers
     public class IngredientController : ApiController
     {
         private PizzaDbContext db = new PizzaDbContext();
+        private double basicPrice = 15.0;
 
         // api/Ingredient/GetAll
         [HttpGet]
@@ -50,7 +51,51 @@ namespace WebService.Controllers
                 return BadRequest("Unknown id.");
             }
 
+            var distinctedListOfOfferedPizzaIds = db.IngredientsOfOfferedPizza.
+                                            Where(k => k.Id_Ingredient == ingredient.Id_Ingredient).
+                                            Select(k => k.Id_Offered_Pizza).
+                                            Distinct().ToList();
+
             db.Ingredients.Remove(ingredient);
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            if (distinctedListOfOfferedPizzaIds != null)
+            {
+                foreach (var offeredPizzaId in distinctedListOfOfferedPizzaIds)
+                {
+                    OfferedPizza offeredPizza = db.OfferedPizzas.Find(offeredPizzaId);
+                    if (offeredPizza == null)
+                    {
+                        continue;
+                    }
+                    
+                    var newIngredientsIds = db.IngredientsOfOfferedPizza.
+                                            Where(k => k.Id_Offered_Pizza == offeredPizzaId).
+                                            Select(k => k.Id_Ingredient).
+                                            ToList();
+                    double price = basicPrice;
+                    foreach (var newIngredientId in newIngredientsIds)
+                    {
+                        var existedIngredients = db.Ingredients.Find(newIngredientId);
+                        if (existedIngredients == null)
+                        {
+                            continue;
+                        }
+
+                        price += existedIngredients.Price;
+                    }
+
+                    offeredPizza.Price = price;
+                }
+            }
 
             try
             {
@@ -92,7 +137,7 @@ namespace WebService.Controllers
             {
                 return BadRequest("Price is invalid!");
             }
-            //TODO aktualizowac oferowane pizze po usunieciu skladnika
+
             db.Ingredients.Add(new Ingredient() {
                 Name = name,
                 Price = price

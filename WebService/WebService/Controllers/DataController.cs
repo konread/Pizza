@@ -16,7 +16,7 @@ namespace WebService.Controllers
         private PizzaDbContext db = new PizzaDbContext();
         private double basicPrice = 15.0;
 
-        [HttpPut]
+        [HttpPost]
         [Route("api/Data/LoadIngredients")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> LoadIngredients()
@@ -62,7 +62,7 @@ namespace WebService.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("api/Data/LoadPizzas")]
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> LoadPizzas()
