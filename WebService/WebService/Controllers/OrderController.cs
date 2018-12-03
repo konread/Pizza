@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
+﻿using System.Data.Entity.Infrastructure;
 using System.Net;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,10 +6,6 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebService.Context;
 using WebService.Models;
-using System.Web;
-using System.Data.Entity;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
 using System;
 
 namespace WebService.Controllers
@@ -55,52 +50,6 @@ namespace WebService.Controllers
             }
 
             db.Orders.Remove(order);
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                return BadRequest(e.Message);
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // api/Order/AddObj
-        [HttpPost]
-        [ResponseType(typeof(Order))]
-        public async Task<IHttpActionResult> AddObj(Order order)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var oldOrder = db.Orders.Find(order.Id_Order);
-            if (oldOrder != null)
-            {
-                return BadRequest("Cannot insert duplicate key row.");
-            }
-
-            var customer = db.Customers.Find(order.Id_Customer);
-            if (customer == null)
-            {
-                return BadRequest("Customer with this id: " + order.Id_Customer + " doesn't exist in db.");
-            }
-
-            if (order.Price <= 0)
-            {
-                return BadRequest("Missing or invalid order.Price field in provided object!");
-            }
-
-            if (string.IsNullOrEmpty(order.Status))
-            {
-                return BadRequest("Missing order.Status field in provided object!");
-            }
-
-            db.Orders.Add(order);
 
             try
             {

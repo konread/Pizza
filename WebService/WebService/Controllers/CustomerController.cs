@@ -36,75 +36,6 @@ namespace WebService.Controllers
             return Ok(customer);
         }
 
-        // api/Customer/Add
-        [HttpPost]
-        [ResponseType(typeof(Customer))]
-        public async Task<IHttpActionResult> AddObj(Customer customer)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var oldCustomer = db.Customers.Find(customer.Id_Customer);
-            if (oldCustomer != null)
-            {
-                return BadRequest("Cannot insert duplicate key row.");
-            }
-
-            oldCustomer = db.Customers.Where(k =>
-                                                k.First_Name == customer.First_Name
-                                                && k.Surname == customer.Surname
-                                                && k.Postal_code == customer.Postal_code).FirstOrDefault();
-            if (oldCustomer != null)
-            {
-                return BadRequest("Customer exists in db.");
-            }
-
-            if (string.IsNullOrEmpty(customer.First_Name))
-            {
-                return BadRequest("Missing customer.First_Name field in object!");
-            }
-
-            if (string.IsNullOrEmpty(customer.Surname))
-            {
-                return BadRequest("Missing customer.Surname field in object!");
-            }
-
-            if (string.IsNullOrEmpty(customer.Street_Name))
-            {
-                return BadRequest("Missing customer.Street_Name field in object!");
-            }
-
-            if (string.IsNullOrEmpty(customer.City_Name))
-            {
-                return BadRequest("Missing customer.City_Name field in object!");
-            }
-
-            if (string.IsNullOrEmpty(customer.Postal_code) || !customer.Postal_code.Contains("-"))
-            {
-                return BadRequest("Missing or invalid customer.Postal_code field in object!");
-            }
-
-            if (customer.House_Number <= 0)
-            {
-                return BadRequest("Missing or invalid customer.House_Number field in object!");
-            }
-
-            db.Customers.Add(customer);
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                return BadRequest(e.Message);
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
         [HttpDelete]
         [Route("api/Customer/Delete/{id}")]
         [ResponseType(typeof(void))]
@@ -130,8 +61,9 @@ namespace WebService.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // api/Customer/Add?name=xx&surname=xx&street=xx&houseNumber=xx&city=xx&postalCode=xx
+        // api/Customer/Add?name=xx&surname=xx&streetName=xx&houseNumber=xx&cityName=xx&postalCode=xx
         [HttpPost]
+        [Route("api/Customer/Add")]
         [ResponseType(typeof(Customer))]
         public async Task<IHttpActionResult> Add(string name, string surname, string streetName, int houseNumber, string cityName, string postalCode)
         {
@@ -143,6 +75,9 @@ namespace WebService.Controllers
             var oldCustomer = db.Customers.Where(k =>
                                                 k.First_Name == name
                                                 && k.Surname == surname
+                                                && k.Street_Name == streetName
+                                                && k.House_Number == houseNumber
+                                                && k.City_Name == cityName
                                                 && k.Postal_code == postalCode).FirstOrDefault();
             if (oldCustomer != null)
             {
