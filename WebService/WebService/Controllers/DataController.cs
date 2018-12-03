@@ -14,6 +14,7 @@ namespace WebService.Controllers
     public class DataController : ApiController
     {
         private PizzaDbContext db = new PizzaDbContext();
+        private double basicPrice = 15.0;
 
         [HttpPut]
         [Route("api/Data/LoadIngredients")]
@@ -103,7 +104,7 @@ namespace WebService.Controllers
 
             foreach (var pwingr in PizzaWithIngredients)
             {
-                double price = 0.0;
+                double price = basicPrice;
                 var existedPizza = db.OfferedPizzas.SingleOrDefault(r => r.Name == pwingr.Key);
                 foreach (var ingr in pwingr.Value)
                 {
@@ -128,7 +129,7 @@ namespace WebService.Controllers
                         });
                     }
                 }
-                existedPizza.Price = 15.0 + price;
+                existedPizza.Price = price;
             }
 
             try

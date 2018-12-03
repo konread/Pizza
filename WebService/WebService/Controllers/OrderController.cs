@@ -73,6 +73,8 @@ namespace WebService.Controllers
                 return BadRequest(ModelState);
             }
 
+            status = status.ToUpper();
+
             var customer = db.Customers.Find(customerId);
             if (customer == null)
             {

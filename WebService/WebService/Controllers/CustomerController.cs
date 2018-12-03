@@ -6,6 +6,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebService.Context;
 using WebService.Models;
+using System.Globalization;
+using System.Threading;
 
 namespace WebService.Controllers
 {
@@ -72,6 +74,11 @@ namespace WebService.Controllers
                 return BadRequest(ModelState);
             }
 
+            name = ToTitleCase(name);
+            surname = ToTitleCase(surname);
+            streetName = ToTitleCase(streetName);
+            cityName = ToTitleCase(cityName);
+
             var oldCustomer = db.Customers.Where(k =>
                                                 k.First_Name == name
                                                 && k.Surname == surname
@@ -133,6 +140,13 @@ namespace WebService.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        private string ToTitleCase(string s)
+        {
+            CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
+            TextInfo textInfo = cultureInfo.TextInfo;
+            return textInfo.ToTitleCase(s);
         }
     }
 }

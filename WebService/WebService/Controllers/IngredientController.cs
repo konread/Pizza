@@ -6,6 +6,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebService.Context;
 using WebService.Models;
+using System.Globalization;
+using System.Threading;
 
 namespace WebService.Controllers
 {
@@ -73,6 +75,8 @@ namespace WebService.Controllers
                 return BadRequest(ModelState);
             }
 
+            name = ToTitleCase(name);
+
             var oldIngredients = db.Ingredients.FirstOrDefault(k => k.Name == name);
             if (oldIngredients != null)
             {
@@ -104,6 +108,13 @@ namespace WebService.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        private string ToTitleCase(string s)
+        {
+            CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
+            TextInfo textInfo = cultureInfo.TextInfo;
+            return textInfo.ToTitleCase(s);
         }
     }
 }

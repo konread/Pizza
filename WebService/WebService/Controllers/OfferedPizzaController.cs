@@ -7,14 +7,15 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebService.Context;
 using WebService.Models;
-using System.Web;
-using System.Data.Entity;
+using System.Globalization;
+using System.Threading;
 
 namespace WebService.Controllers
 {
     public class OfferedPizzaController : ApiController
     {
         private PizzaDbContext db = new PizzaDbContext();
+        private double basicPrice = 15.0;
 
         // api/OfferedPizza/GetAll
         [HttpGet]
@@ -65,32 +66,50 @@ namespace WebService.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        // api/OfferedPizza/Add?name=Marinera&ingredientsNames=sos,ser,pieczarki
         [HttpPost]
+        [Route("api/OfferedPizza/Add")]
         [ResponseType(typeof(OfferedPizza))]
-        public async Task<IHttpActionResult> Add(OfferedPizza offeredPizza)
+        public async Task<IHttpActionResult> Add(string name, string ingredientsNames)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var oldOfferedPizzas = db.OfferedPizzas.FirstOrDefault(k => k.Name == offeredPizza.Name);
+            string[] ingredientsNamesArray = ingredientsNames.Split(',');
+            if (ingredientsNamesArray.Length == 0)
+            {
+                return BadRequest("List of ingredientsNames is empty");
+            }
+
+            name = ToTitleCase(name);
+            var oldOfferedPizzas = db.OfferedPizzas.FirstOrDefault(k => k.Name == name);
             if (oldOfferedPizzas != null)
             {
-                return BadRequest("Cannot insert duplicate key row.");
+                return BadRequest("Cannot insert duplicate key row. This name: " + name + " exist in db!");
             }
 
-            if (string.IsNullOrEmpty(offeredPizza.Name))
+            if (string.IsNullOrEmpty(name))
             {
-                return BadRequest("Empty name item in object!");
+                return BadRequest("Empty name field!");
             }
 
-            if (offeredPizza.Price <= 0)
+            List<int> ingredientsId = new List<int>();
+            double price = basicPrice;
+            foreach (var ingredientName in ingredientsNamesArray)
             {
-                return BadRequest("Price is invalid!");
+                var titledIngredientName = ToTitleCase(ingredientName);
+                var result = db.Ingredients.FirstOrDefault(k => k.Name == titledIngredientName);
+                if (result == null)
+                {
+                    return BadRequest("Unknown ingredient name: " + titledIngredientName);
+                }
+                price += result.Price;
+                ingredientsId.Add(result.Id_Ingredient);
             }
-            //TODO dodawanie skladnikow
-            db.OfferedPizzas.Add(offeredPizza);
+            
+            db.OfferedPizzas.Add(new OfferedPizza() { Name = name, Price = price });
 
             try
             {
@@ -101,7 +120,38 @@ namespace WebService.Controllers
                 return BadRequest(e.Message);
             }
 
+            var existedPizza = db.OfferedPizzas.SingleOrDefault(r => r.Name == name);
+            if(existedPizza == null)
+            {
+                return BadRequest("Unknown pizza name: " + name);
+            }
+
+            foreach (var id in ingredientsId)
+            {
+                db.IngredientsOfOfferedPizza.Add(new IngredientOfOfferedPizza()
+                {
+                    Id_Offered_Pizza = existedPizza.Id_Offered_Pizza,
+                    Id_Ingredient = id
+                });
+            }
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        private string ToTitleCase(string s)
+        {
+            CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
+            TextInfo textInfo = cultureInfo.TextInfo;
+            return textInfo.ToTitleCase(s);
         }
     }
 }
