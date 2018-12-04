@@ -14,7 +14,7 @@ namespace WebService.Controllers
     public class DataController : ApiController
     {
         private PizzaDbContext db = new PizzaDbContext();
-        private double basicPrice = 15.0;
+        private decimal basicPrice = 15.0m;
 
         [HttpPost]
         [Route("api/Data/LoadIngredients")]
@@ -27,17 +27,17 @@ namespace WebService.Controllers
             }
 
             List<Ingredient> ingredients = new List<Ingredient>() {
-                new Ingredient{Name="Bazylia",Price=0.5 },new Ingredient{Name="Pomidory",Price=2.5},
-                new Ingredient{Name="Parmezan",Price=6.0},new Ingredient{Name="Rukola",Price=1.5},
-                new Ingredient{Name="Papryka",Price=2.5},new Ingredient{Name="Cukinia",Price=2.5},
-                new Ingredient{Name="Czosnek",Price=1.5},new Ingredient{Name="Oregano",Price=0.5},
-                new Ingredient{Name="Ser",Price=2.1},new Ingredient{Name="Sos",Price=1.6},
-                new Ingredient{Name="Szynka",Price=3.6},new Ingredient{Name="Salami",Price=3.6},
-                new Ingredient{Name="Kabanosy",Price=3.6},new Ingredient{Name="Bekon",Price=3.6},
-                new Ingredient{Name="Cebula",Price=1.7},new Ingredient{Name="Kukurydza",Price=1.8},
-                new Ingredient{Name="Łosoś",Price=12.8},new Ingredient{Name="Oliwki",Price=3.4},
-                new Ingredient{Name="Kapary",Price=2.9},new Ingredient{Name="Pieczarki",Price=2.6},
-                new Ingredient{Name="Tabasco",Price=4.8}
+                new Ingredient{Name="Bazylia",Price=0.5m },new Ingredient{Name="Pomidory",Price=2.5m },
+                new Ingredient{Name="Parmezan",Price=6.0m },new Ingredient{Name="Rukola",Price=1.5m },
+                new Ingredient{Name="Papryka",Price=2.5m },new Ingredient{Name="Cukinia",Price=2.5m },
+                new Ingredient{Name="Czosnek",Price=1.5m },new Ingredient{Name="Oregano",Price=0.5m },
+                new Ingredient{Name="Ser",Price=2.1m },new Ingredient{Name="Sos",Price=1.6m },
+                new Ingredient{Name="Szynka",Price=3.6m },new Ingredient{Name="Salami",Price=3.6m },
+                new Ingredient{Name="Kabanosy",Price=3.6m },new Ingredient{Name="Bekon",Price=3.6m },
+                new Ingredient{Name="Cebula",Price=1.7m },new Ingredient{Name="Kukurydza",Price=1.8m },
+                new Ingredient{Name="Łosoś",Price=12.8m },new Ingredient{Name="Oliwki",Price=3.4m },
+                new Ingredient{Name="Kapary",Price=2.9m },new Ingredient{Name="Pieczarki",Price=2.6m },
+                new Ingredient{Name="Tabasco",Price=4.8m }
             };
 
             foreach(var ingr in ingredients)
@@ -104,7 +104,7 @@ namespace WebService.Controllers
 
             foreach (var pwingr in PizzaWithIngredients)
             {
-                double price = basicPrice;
+                decimal price = basicPrice;
                 var existedPizza = db.OfferedPizzas.SingleOrDefault(r => r.Name == pwingr.Key);
                 foreach (var ingr in pwingr.Value)
                 {

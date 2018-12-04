@@ -18,7 +18,7 @@ namespace WebService.Models
         [ForeignKey("Customers")]
         public int Id_Customer { get; set; }
         [DataMember]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         [DataMember]
         [DisplayFormat(DataFormatString = "{DD-MM-YYYY}")]

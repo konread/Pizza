@@ -14,7 +14,7 @@ namespace WebService.Controllers
     public class IngredientController : ApiController
     {
         private PizzaDbContext db = new PizzaDbContext();
-        private double basicPrice = 15.0;
+        private decimal basicPrice = 15.0m;
 
         // api/Ingredient/GetAll
         [HttpGet]
@@ -81,7 +81,7 @@ namespace WebService.Controllers
                                             Where(k => k.Id_Offered_Pizza == offeredPizzaId).
                                             Select(k => k.Id_Ingredient).
                                             ToList();
-                    double price = basicPrice;
+                    decimal price = basicPrice;
                     foreach (var newIngredientId in newIngredientsIds)
                     {
                         var existedIngredients = db.Ingredients.Find(newIngredientId);
@@ -113,7 +113,7 @@ namespace WebService.Controllers
         [HttpPost]
         [Route("api/Ingredient/Add")]
         [ResponseType(typeof(Ingredient))]
-        public async Task<IHttpActionResult> Add(string name, double price)
+        public async Task<IHttpActionResult> Add(string name, decimal price)
         {
             if (!ModelState.IsValid)
             {

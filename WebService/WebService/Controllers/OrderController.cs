@@ -66,7 +66,7 @@ namespace WebService.Controllers
         // api/Order/Add?customerId=1&price=12&date=01-01-2000&status=Z
         [HttpPost]
         [ResponseType(typeof(Order))]
-        public async Task<IHttpActionResult> Add(int customerId, double price, DateTime date, string status)
+        public async Task<IHttpActionResult> Add(int customerId, decimal price, DateTime date, string status)
         {
             if (!ModelState.IsValid)
             {

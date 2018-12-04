@@ -17,7 +17,7 @@ namespace WebService.Models
         [ForeignKey("Orders")]
         public int Id_Order { get; set; }
         [DataMember]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         public virtual ICollection<IngredientOfOrderedPizza> IngredientsOfOrderedPizza { get; set; }
         public virtual Order Orders { get; set; }

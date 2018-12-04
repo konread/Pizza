@@ -17,7 +17,7 @@ namespace WebService.Controllers
     public class OfferedPizzaController : ApiController
     {
         private PizzaDbContext db = new PizzaDbContext();
-        private double basicPrice = 15.0;
+        private decimal basicPrice = 15.0m;
 
         // api/OfferedPizza/GetAll
         [HttpGet]
@@ -133,7 +133,7 @@ namespace WebService.Controllers
             }
 
             List<int> ingredientsId = new List<int>();
-            double price = basicPrice;
+            decimal price = basicPrice;
             foreach (var ingredientName in ingredientsNamesArray)
             {
                 var titledIngredientName = ToTitleCase(ingredientName);

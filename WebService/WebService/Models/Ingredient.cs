@@ -18,7 +18,7 @@ namespace WebService.Models
         [Index(IsUnique = true)]
         public string Name { get; set; }
         [DataMember]
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         public virtual ICollection<IngredientOfOfferedPizza> IngredientsOfOfferedPizza { get; set; }
         public virtual ICollection<IngredientOfOrderedPizza> IngredientsOfOrderedPizza { get; set; }
