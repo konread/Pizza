@@ -9,6 +9,8 @@ using WebService.Context;
 using WebService.Models;
 using System.Globalization;
 using System.Threading;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace WebService.Controllers
 {
@@ -23,6 +25,41 @@ namespace WebService.Controllers
         public IQueryable<OfferedPizza> GetAll()
         {
             return db.OfferedPizzas;
+        }
+
+        // api/OfferedPizza/GetAllWithIngredients
+        [HttpGet]
+        [Route("api/OfferedPizza/GetAllWithIngredients")]
+        public IHttpActionResult GetAllWithIngredients()
+        {
+            var allPizza = db.OfferedPizzas;
+            if (allPizza == null)
+            {
+                return BadRequest("Empty db.");
+            }
+
+            List<JObject> response = new List<JObject>();
+            foreach (var pizza in allPizza)
+            {
+                JObject jobject = JObject.FromObject(pizza);
+                JArray jarray = new JArray();
+                var ingredientsOfOfferedPizza = db.IngredientsOfOfferedPizza.Where(k => k.Id_Offered_Pizza == pizza.Id_Offered_Pizza).ToList();
+                foreach(var ingredient in ingredientsOfOfferedPizza)
+                {
+                    var existedIngredient = db.Ingredients.Find(ingredient.Id_Ingredient);
+                    if (existedIngredient == null)
+                    {
+                        continue;
+                    }
+
+                    jarray.Add(JObject.FromObject(existedIngredient));
+                }
+
+                jobject.Add("List of Ingredients", jarray);
+                response.Add(jobject);
+            }
+
+            return Ok(response);
         }
 
         // api/OfferedPizza/Get/1
