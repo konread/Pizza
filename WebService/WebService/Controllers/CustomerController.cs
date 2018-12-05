@@ -49,6 +49,12 @@ namespace WebService.Controllers
                 return BadRequest("Unknown id.");
             }
 
+            var ordersNumber = db.Orders.Where(k => k.Id_Customer == customer.Id_Customer).Count();
+            if (ordersNumber > 0)
+            {
+                return BadRequest("This customer have active order/s!");
+            }
+
             db.Customers.Remove(customer);
 
             try
