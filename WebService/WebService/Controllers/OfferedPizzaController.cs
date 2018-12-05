@@ -9,7 +9,6 @@ using WebService.Context;
 using WebService.Models;
 using System.Globalization;
 using System.Threading;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace WebService.Controllers
