@@ -54,7 +54,7 @@ namespace WebService.Controllers
                     jarray.Add(JObject.FromObject(existedIngredient));
                 }
 
-                jobject.Add("List of Ingredients", jarray);
+                jobject.Add("ListOfIngredients", jarray);
                 response.Add(jobject);
             }
 

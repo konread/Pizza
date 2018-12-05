@@ -89,7 +89,7 @@ namespace WebService.Controllers
 
             if (string.IsNullOrEmpty(status))
             {
-                return BadRequest("Missing order.Status field in provided object!");
+                return BadRequest("Missing or invalid order.Status field in provided object!");
             }
 
             db.Orders.Add(new Order() {
@@ -98,6 +98,44 @@ namespace WebService.Controllers
                 Order_Date = date,
                 Status = status
             });
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // api/Order/UpdateStatus?orderId=1&status=Z
+        [HttpPost]
+        [Route("api/Order/UpdateStatus")]
+        [ResponseType(typeof(Order))]
+        public async Task<IHttpActionResult> UpdateStatus(int orderId, string status)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            status = status.ToUpper();
+
+            var order = db.Orders.Find(orderId);
+            if (order == null)
+            {
+                return BadRequest("Order with this id: " + orderId + " doesn't exist in db.");
+            }
+
+            if (string.IsNullOrEmpty(status))
+            {
+                return BadRequest("Missing or invalid order.Status field in provided object!");
+            }
+
+            order.Status = status;
 
             try
             {
