@@ -1,7 +1,0 @@
-C:\Users\Damian\Desktop\Student Projects\pizza\Web\Model\bin\Debug\Model.exe.config
-C:\Users\Damian\Desktop\Student Projects\pizza\Web\Model\bin\Debug\Model.exe
-C:\Users\Damian\Desktop\Student Projects\pizza\Web\Model\bin\Debug\Model.pdb
-C:\Users\Damian\Desktop\Student Projects\pizza\Web\Model\obj\Debug\Model.csproj.CoreCompileInputs.cache
-C:\Users\Damian\Desktop\Student Projects\pizza\Web\Model\obj\Debug\Model.exe
-C:\Users\Damian\Desktop\Student Projects\pizza\Web\Model\obj\Debug\Model.pdb
-C:\Users\Damian\Desktop\Student Projects\pizza\Web\Model\obj\Debug\Model.csprojAssemblyReference.cache
