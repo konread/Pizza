@@ -40,19 +40,25 @@ namespace WebService.Controllers
             return Ok(orderedPizza);
         }
 
-        // api/OrderedPizza/Add?idOrder=1&price=56.2
+        // api/OrderedPizza/Add?idOrder=1&price=56.2&&ingredientsNames=sos,ser,pieczarki
         [HttpPost]
         [Route("api/OrderedPizza/Add")]
         [ResponseType(typeof(OrderedPizza))]
-        public async Task<IHttpActionResult> Add(int idOrder, decimal price)
+        public async Task<IHttpActionResult> Add(int idOrder, decimal price, string ingredientsNames)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var oldOrderedPizza = db.Orders.Find(idOrder);
-            if (oldOrderedPizza == null)
+            string[] ingredientsNamesArray = ingredientsNames.Split(',');
+            if (ingredientsNamesArray.Length == 0)
+            {
+                return BadRequest("List of ingredientsNames is empty");
+            }
+
+            var order = db.Orders.Find(idOrder);
+            if (order == null)
             {
                 return BadRequest("Order: "+idOrder+" doesn't exist!");
             }
@@ -60,6 +66,18 @@ namespace WebService.Controllers
             if (price <= 0.0m)
             {
                 return BadRequest("Invalid price value!");
+            }
+
+            List<int> ingredientsId = new List<int>();
+            foreach (var ingredientName in ingredientsNamesArray)
+            {
+                var titledIngredientName = ToTitleCase(ingredientName);
+                var result = db.Ingredients.FirstOrDefault(k => k.Name == titledIngredientName);
+                if (result == null)
+                {
+                    return BadRequest("Unknown ingredient name: " + titledIngredientName);
+                }
+                ingredientsId.Add(result.Id_Ingredient);
             }
 
             db.OrderedPizzas.Add(new OrderedPizza() { Id_Order = idOrder, Price = price });
@@ -71,6 +89,30 @@ namespace WebService.Controllers
             catch (DbUpdateConcurrencyException e)
             {
                 return BadRequest(e.Message);
+            }
+
+            var existedPizza = db.OrderedPizzas.SingleOrDefault(r => r.Id_Order == idOrder);
+            if (existedPizza == null)
+            {
+                return BadRequest("Unknown order id: " + idOrder);
+            }
+
+            foreach (var id in ingredientsId)
+            {
+                db.IngredientsOfOrderedPizza.Add(new IngredientOfOrderedPizza()
+                {
+                    Id_Ordered_Pizza = existedPizza.Id_Ordered_Pizza,
+                    Id_Ingredient = id
+                });
+            }
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -106,6 +148,13 @@ namespace WebService.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        private string ToTitleCase(string s)
+        {
+            CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
+            TextInfo textInfo = cultureInfo.TextInfo;
+            return textInfo.ToTitleCase(s);
         }
     }
 }
