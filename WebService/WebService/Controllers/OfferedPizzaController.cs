@@ -21,9 +21,12 @@ namespace WebService.Controllers
         // api/OfferedPizza/GetAll
         [HttpGet]
         [Route("api/OfferedPizza/GetAll")]
-        public IQueryable<OfferedPizza> GetAll()
+        public IHttpActionResult GetAll()
         {
-            return db.OfferedPizzas;
+            var pizza = db.OfferedPizzas;
+            JObject jobject = new JObject();
+            jobject.Add("OfferedPizza", JArray.FromObject(pizza));
+            return Ok(jobject);
         }
 
         // api/OfferedPizza/GetAllWithIngredients
@@ -37,7 +40,7 @@ namespace WebService.Controllers
                 return BadRequest("Empty db.");
             }
 
-            List<JObject> response = new List<JObject>();
+            JArray response = new JArray();
             foreach (var pizza in allPizza)
             {
                 JObject jobject = JObject.FromObject(pizza);
@@ -58,7 +61,9 @@ namespace WebService.Controllers
                 response.Add(jobject);
             }
 
-            return Ok(response);
+            JObject newObject = new JObject();
+            newObject.Add("OfferedPizzaWithIngredients", JArray.FromObject(response));
+            return Ok(newObject);
         }
 
         // api/OfferedPizza/Get/1

@@ -8,6 +8,7 @@ using WebService.Context;
 using WebService.Models;
 using System.Globalization;
 using System.Threading;
+using Newtonsoft.Json.Linq;
 
 namespace WebService.Controllers
 {
@@ -19,9 +20,12 @@ namespace WebService.Controllers
         // api/Ingredient/GetAll
         [HttpGet]
         [Route("api/Ingredient/GetAll")]
-        public IQueryable<Ingredient> GetAll()
+        public IHttpActionResult GetAll()
         {
-            return db.Ingredients;
+            var ingredients = db.Ingredients;
+            JObject jobject = new JObject();
+            jobject.Add("Ingredients", JArray.FromObject(ingredients));
+            return Ok(jobject);
         }
 
         // api/Ingredient/Get/1
