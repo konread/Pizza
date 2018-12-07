@@ -20,9 +20,12 @@ namespace WebService.Controllers
         // api/OrderedPizza/GetAll
         [HttpGet]
         [Route("api/OrderedPizza/GetAll")]
-        public IQueryable<OrderedPizza> GetAll()
+        public IHttpActionResult GetAll()
         {
-            return db.OrderedPizzas;
+            var orderedPizzas = db.OrderedPizzas;
+            JObject jobject = new JObject();
+            jobject.Add("OrderedPizzas", JArray.FromObject(orderedPizzas));
+            return Ok(jobject);
         }
 
         // api/OrderedPizza/Get/1
