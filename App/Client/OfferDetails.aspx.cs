@@ -17,7 +17,7 @@ namespace Client
             {
                 if (!IsPostBack)
                 {
-                    OfferPizza offerPizza = HelperSession.GetOfferPizza(Session);
+                    OfferedPizza offerPizza = HelperSession.GetOfferPizza(Session);
 
                     List<Ingredient> listIngredientsAll = HelperSession.GetListIngredientsAll(Session);
                     List<Ingredient> listIngredientsOffer = HelperIngredient.Connect(offerPizza.Ingredients, listIngredientsAll);
@@ -36,7 +36,7 @@ namespace Client
 
         protected void CbStatus_CheckedChanged(object sender, EventArgs e)
         {
-            OfferPizza offerPizza = HelperSession.GetOfferPizza(Session);
+            OfferedPizza offerPizza = HelperSession.GetOfferPizza(Session);
 
             List<Ingredient> listIngredientsOffer = HelperSession.GetListIngredientsOffer(Session);
 
@@ -70,7 +70,7 @@ namespace Client
 
         protected void BtnOrder_Click(object sender, EventArgs e)
         {
-            OfferPizza offerPizza = HelperSession.GetOfferPizza(Session);
+            OfferedPizza offerPizza = HelperSession.GetOfferPizza(Session);
 
             OrderPizza orderPizza = new OrderPizza(1, offerPizza.Price, offerPizza.Ingredients);
 

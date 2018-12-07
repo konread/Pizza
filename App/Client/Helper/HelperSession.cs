@@ -18,24 +18,24 @@ namespace Client.Helper
             public static readonly string ListOrdersPizza = "ListOrdersPizza";
         }
 
-        public static void SetOfferPizza(HttpSessionState session, OfferPizza offer)
+        public static void SetOfferPizza(HttpSessionState session, OfferedPizza offer)
         {
             session[SessionConstans.OfferPizza] = offer;
         }
 
-        public static OfferPizza GetOfferPizza(HttpSessionState session)
+        public static OfferedPizza GetOfferPizza(HttpSessionState session)
         {
-            return (OfferPizza) session[SessionConstans.OfferPizza];
+            return (OfferedPizza) session[SessionConstans.OfferPizza];
         }
 
-        public static void SetListOffersPizza(HttpSessionState session, List<OfferPizza> listOffersPizza)
+        public static void SetListOffersPizza(HttpSessionState session, List<OfferedPizza> listOffersPizza)
         {
             session[SessionConstans.ListOffersPizza] = listOffersPizza;
         }
 
-        public static List<OfferPizza> GetListOffersPizza(HttpSessionState session)
+        public static List<OfferedPizza> GetListOffersPizza(HttpSessionState session)
         {
-            return (List<OfferPizza>) session[SessionConstans.ListOffersPizza];
+            return (List<OfferedPizza>) session[SessionConstans.ListOffersPizza];
         }
 
         public static void SetListIngredientsAll(HttpSessionState session, List<Ingredient> listIngredientsAll)

@@ -42,7 +42,7 @@
     <Compile Include="Client.cs" />
     <Compile Include="Helper\HelperIngredient.cs" />
     <Compile Include="Ingredient.cs" />
-    <Compile Include="OfferPizza.cs" />
+    <Compile Include="OfferedPizza.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderPizza.cs" />
   </ItemGroup>

@@ -9,7 +9,7 @@ namespace Model.Helper
         {
             foreach (Ingredient ingredient in ingredientsPizza)
             {
-                ingredientsAll.First(item => item.Id == ingredient.Id).Status = true;
+                ingredientsAll.First(item => item.Id_Ingredient == ingredient.Id_Ingredient).Status = true;
             }
 
             return ingredientsAll;

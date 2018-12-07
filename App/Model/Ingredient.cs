@@ -8,7 +8,7 @@ namespace Model
 {
     public class Ingredient
     {
-        public int Id { get; set; }
+        public int Id_Ingredient { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
         public bool Status { get; set; }

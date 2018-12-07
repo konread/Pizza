@@ -14,7 +14,7 @@ namespace Client
         {
             if (!IsPostBack)
             {
-                List<OfferPizza> listOffersPizza = WebService.Data.GetListOffersPizza();
+                List<OfferedPizza> listOffersPizza = WebService.Data.GetListOffersPizza();
                 List<Ingredient> listIngredientsAll = WebService.Data.GetListIngredientsAll();
 
                 Helper.HelperSession.SetListOffersPizza(Session, listOffersPizza);
@@ -37,8 +37,8 @@ namespace Client
 
             int index = Convert.ToInt32(btnOfferDetails.CommandArgument.ToString());
 
-            List<OfferPizza> listOffersPizza = Helper.HelperSession.GetListOffersPizza(Session);
-            OfferPizza offer = listOffersPizza[index];
+            List<OfferedPizza> listOffersPizza = Helper.HelperSession.GetListOffersPizza(Session);
+            OfferedPizza offer = listOffersPizza[index];
 
             Helper.HelperSession.SetOfferPizza(Session, offer);
 
