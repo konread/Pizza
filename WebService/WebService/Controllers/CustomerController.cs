@@ -89,18 +89,6 @@ namespace WebService.Controllers
             streetName = ToTitleCase(streetName);
             cityName = ToTitleCase(cityName);
 
-            var oldCustomer = db.Customers.Where(k =>
-                                                k.First_Name == name
-                                                && k.Surname == surname
-                                                && k.Street_Name == streetName
-                                                && k.House_Number == houseNumber
-                                                && k.City_Name == cityName
-                                                && k.Postal_code == postalCode).FirstOrDefault();
-            if (oldCustomer != null)
-            {
-                return BadRequest("Customer exists in db.");
-            }
-
             if (string.IsNullOrEmpty(name))
             {
                 return BadRequest("Missing customer.First_Name field in object!");
