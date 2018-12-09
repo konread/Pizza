@@ -8,6 +8,7 @@ using System.Web.Http.Description;
 using WebService.Context;
 using WebService.Models;
 using System.Web;
+using System;
 
 namespace WebService.Controllers
 {
@@ -130,6 +131,175 @@ namespace WebService.Controllers
                     }
                 }
                 existedPizza.Price = price;
+            }
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPost]
+        [Route("api/Data/LoadCustomers")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> LoadCustomers()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            List<Customer> customers = new List<Customer>() {
+                new Customer{First_Name="Damian",Surname="Dudek",Street_Name="Lodowa",House_Number=29,City_Name="Wrocław",Postal_code="95-569"},
+                new Customer{First_Name="Konrad",Surname="Słaby",Street_Name="Piłsudskiego",House_Number=39,City_Name="Łódź",Postal_code="91-562"},
+                new Customer{First_Name="Jan",Surname="Wężyk",Street_Name="Dupna",House_Number=13,City_Name="Gdańsk",Postal_code="99-999"}
+            };
+
+            foreach (var cust in customers)
+            {
+                db.Customers.Add(cust);
+            }
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPost]
+        [Route("api/Data/LoadOrdersWithPizzas")]
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> LoadOrdersWithPizzas()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var custs = db.Customers.Take(3);
+            if (custs == null)
+            {
+                return BadRequest("Table customers is empty!");
+            }
+
+            foreach (var cust in custs)
+            {
+                DateTime date = DateTime.UtcNow.ToLocalTime();
+                db.Orders.Add(new Order() { Id_Customer = cust.Id_Customer, Status = "Nowe", Order_Date = date });
+            }
+            
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
+            List<int> my_id_orders = new List<int>();
+            foreach(var cust in custs)
+            {
+                var item = db.Orders.Where(r => r.Id_Customer == cust.Id_Customer).FirstOrDefault();
+                if (item == null)
+                {
+                    continue;
+                }
+                my_id_orders.Add(item.Id_Order);
+            }
+
+            if (my_id_orders == null || my_id_orders.Count != 3)
+            {
+                return BadRequest("Invalid orders in table!");
+            }
+
+            List<Tuple<int, string>> orderIdToIngredientsLists = new List<Tuple<int, string>>();
+            orderIdToIngredientsLists.Add(Tuple.Create(my_id_orders[0], "Bazylia,Pomidory,Parmezan,Rukola,Kabanosy"));
+            orderIdToIngredientsLists.Add(Tuple.Create(my_id_orders[1], "Sos,Ser,Oregano,Cebula"));
+            orderIdToIngredientsLists.Add(Tuple.Create(my_id_orders[2], "Cebula,Salami,Kukurydza,Bekon,Ser,Szynka"));
+
+            foreach(var pizza in orderIdToIngredientsLists)
+            {
+                db.OrderedPizzas.Add(new OrderedPizza() { Id_Order = pizza.Item1 });
+            }
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            foreach(var my_id_order in my_id_orders)
+            {
+                var order = db.Orders.Find(my_id_order);
+                if (order == null)
+                {
+                    return BadRequest("Invalid id order");
+                }
+
+                var orderedPizzas = db.OrderedPizzas.Where(r => r.Id_Order == order.Id_Order);
+                if (orderedPizzas == null)
+                {
+                    return BadRequest("Invalid id order in OrderedPizzas");
+                }
+
+                decimal totalPrice = 0m;
+                foreach(var orderedPizza in orderedPizzas)
+                {
+                    string ingredientsList = "";
+                    foreach (var oitil in orderIdToIngredientsLists)
+                    {
+                        if (oitil.Item1.Equals(orderedPizza.Id_Order))
+                        {
+                            ingredientsList = oitil.Item2;
+                            break;
+                        }
+                    }
+
+                    if (ingredientsList.Length == 0)
+                    {
+                        return BadRequest("Offered pizza not found!");
+                    }
+
+                    decimal price = basicPrice;
+                    string[] ingredientsNames = ingredientsList.Split(',');
+                    foreach(var ingredientName in ingredientsNames)
+                    {
+                        var ingr = db.Ingredients.Where(r => r.Name == ingredientName).FirstOrDefault();
+                        if (ingr == null)
+                        {
+                            return BadRequest("Unknown ingredient! name = "+ingredientName);
+                        }
+
+                        price += ingr.Price;
+
+                        db.IngredientsOfOrderedPizza.Add(new IngredientOfOrderedPizza()
+                        {
+                            Id_Ingredient = ingr.Id_Ingredient,
+                            Id_Ordered_Pizza = orderedPizza.Id_Ordered_Pizza
+                        });
+                    }
+
+                    orderedPizza.Price = price;
+                    totalPrice += price;
+                }
+
+                order.Price = totalPrice;
             }
 
             try

@@ -25,7 +25,7 @@ namespace WebService.Models
         [DataType(DataType.Date)]
         public DateTime Order_Date { get; set; }
         [DataMember]
-        public string Status { get; set; }
+        public string Status { get; set; }//NOWE,REALIZOWANE,ZAKONCZONE
 
         public virtual Customer Customers { get; set; }
         public virtual ICollection<OrderedPizza> OrderedPizzas { get; set; }
