@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public class GetAllWithIngredients
+    public class GetAll
     {
-        public List<OfferedPizza> Pizzas { get; set; }
+        public List<Ingredient> Ingredients { get; set; }
     }
 }

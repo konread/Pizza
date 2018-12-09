@@ -8,5 +8,8 @@
     <Setting Name="GetAllWithIngredients" Type="System.String" Scope="Application">
       <Value Profile="(Default)">api/OfferedPizza/GetAllWithIngredients</Value>
     </Setting>
+    <Setting Name="GetAll" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">api/Ingredient/GetAll</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

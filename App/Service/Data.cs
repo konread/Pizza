@@ -11,69 +11,34 @@ namespace WebService
     {
         public static List<OfferedPizza> GetListOffersPizza()
         {
-            /*
-            List<Ingredient> ingredients1 = new List<Ingredient>
-            {
-                new Ingredient() { Id = 1, Name = "Składnik 1", Price = 1.0 },
-                new Ingredient() { Id = 2, Name = "Składnik 2", Price = 1.0 },
-                new Ingredient() { Id = 3, Name = "Składnik 3", Price = 1.0 }
-            };
-
-            List<Ingredient> ingredients2 = new List<Ingredient>
-            {
-                new Ingredient() { Id = 4, Name = "Składnik 4", Price = 1.0 },
-                new Ingredient() { Id = 5, Name = "Składnik 5", Price = 1.0 },
-                new Ingredient() { Id = 6, Name = "Składnik 6", Price = 1.0 }
-            };
-
-            List<Ingredient> ingredients3 = new List<Ingredient>
-            {
-                new Ingredient() { Id = 1, Name = "Składnik 1", Price = 1.0 },
-                new Ingredient() { Id = 3, Name = "Składnik 3", Price = 1.0 },
-                new Ingredient() { Id = 5, Name = "Składnik 5", Price = 1.0 }
-            };
-
-            List<OfferPizza> listOffers = new List<OfferPizza>
-            {
-                new OfferPizza() { Id = 1, Name = "Pizza 1", Price = 3.00, Ingredients = ingredients1 },
-                new OfferPizza() { Id = 2, Name = "Pizza 2", Price = 3.00, Ingredients = ingredients2 },
-                new OfferPizza() { Id = 3, Name = "Pizza 3", Price = 3.00, Ingredients = ingredients3 },
-                new OfferPizza() { Id = 4, Name = "Pizza 4", Price = 3.00, Ingredients = ingredients1 },
-                new OfferPizza() { Id = 5, Name = "Pizza 5", Price = 3.00, Ingredients = ingredients1 },
-                new OfferPizza() { Id = 6, Name = "Pizza 6", Price = 3.00, Ingredients = ingredients1 }
-            };
-            */
             GetAllWithIngredients getAllWithIngredients = null;
-
-            List<OfferedPizza> listPizzas;
 
             using (var httpClient = new HttpClient())
             {
                 Uri uri = new Uri(Service.Properties.Settings.Default.Host + Service.Properties.Settings.Default.GetAllWithIngredients);
-
+                
                 var response = httpClient.GetStringAsync(uri).Result;
 
-                //getAllWithIngredients = JsonConvert.DeserializeObject<GetAllWithIngredients>(response);
-
-                listPizzas = JsonConvert.DeserializeObject<List<OfferedPizza>>(response);
+                getAllWithIngredients = JsonConvert.DeserializeObject<GetAllWithIngredients>(response);
             }
 
-            return listPizzas;
+            return getAllWithIngredients.Pizzas;
         }
 
         public static List<Ingredient> GetListIngredientsAll()
         {
-            List<Ingredient> listIngredientsAll = new List<Ingredient>
-            {
-                new Ingredient() { Id_Ingredient = 1, Name = "Składnik 1", Price = 1.0, Status = false },
-                new Ingredient() { Id_Ingredient = 2, Name = "Składnik 2", Price = 1.0, Status = false },
-                new Ingredient() { Id_Ingredient = 3, Name = "Składnik 3", Price = 1.0, Status = false },
-                new Ingredient() { Id_Ingredient = 4, Name = "Składnik 4", Price = 1.0, Status = false },
-                new Ingredient() { Id_Ingredient = 5, Name = "Składnik 5", Price = 1.0, Status = false },
-                new Ingredient() { Id_Ingredient = 6, Name = "Składnik 6", Price = 1.0, Status = false }
-            };
+            GetAll getAll = null;
 
-            return listIngredientsAll;
+            using (var httpClient = new HttpClient())
+            {
+                Uri uri = new Uri(Service.Properties.Settings.Default.Host + Service.Properties.Settings.Default.GetAll);
+
+                var response = httpClient.GetStringAsync(uri).Result;
+
+                getAll = JsonConvert.DeserializeObject<GetAll>(response);
+            }
+
+            return getAll.Ingredients;
         }
 
         public static List<Order> GetListOrder()

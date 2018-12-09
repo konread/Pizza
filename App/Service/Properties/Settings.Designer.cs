@@ -40,5 +40,14 @@ namespace Service.Properties {
                 return ((string)(this["GetAllWithIngredients"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("api/Ingredient/GetAll")]
+        public string GetAll {
+            get {
+                return ((string)(this["GetAll"]));
+            }
+        }
     }
 }
