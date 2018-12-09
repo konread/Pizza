@@ -57,12 +57,12 @@ namespace WebService.Controllers
                     jarray.Add(JObject.FromObject(existedIngredient));
                 }
 
-                jobject.Add("ListOfIngredients", jarray);
+                jobject.Add("Ingredients", jarray);
                 response.Add(jobject);
             }
 
             JObject newObject = new JObject();
-            newObject.Add("OfferedPizzaWithIngredients", JArray.FromObject(response));
+            newObject.Add("Pizzas", JArray.FromObject(response));
             return Ok(newObject);
         }
 
