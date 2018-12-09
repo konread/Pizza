@@ -1,0 +1,152 @@
+﻿<Window x:Class="Restaurateur.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="1000">
+
+        <Grid>
+
+        <DataGrid Name="DgListOrders" GridLinesVisibility="None" HeadersVisibility="Column"  AutoGenerateColumns="False" CanUserAddRows="False" ColumnWidth="Auto" CanUserResizeColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FBF6EC"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#000000"/>
+                <Style x:Key="sTextBlock" TargetType="TextBlock">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="Padding" Value="10, 10, 10, 10"/>
+                </Style>
+
+                <Style x:Key="sBorder" TargetType="Border">
+                    <Setter Property="BorderBrush" Value="#E1E1E1" />
+                    <Setter Property="BorderThickness" Value="0, 0, 0, 1"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#CC1100"/>
+                    <Setter Property="Foreground" Value="#FFFFFF" />
+                    <Setter Property="Height" Value="40"/>
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="BorderBrush" Value="#f7f7f7"/>
+                    <Setter Property="FontWeight" Value="Medium"/>
+                    <Setter Property="BorderThickness" Value="0, 0, 1, 0"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="Height" Value="Auto"/>
+                    <Setter Property="MinHeight" Value="40"/>
+                    <Setter Property="FontSize" Value="14" />
+                    <Setter Property="BorderBrush" Value="#E1E1E1" />
+                    <Setter Property="BorderThickness" Value="0, 0, 0, 1"/>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="BorderBrush" Value="#E1E1E1" />
+                    <Setter Property="Height" Value="Auto"/>
+                    <Setter Property="MinHeight" Value="40"/>
+                    <Setter Property="BorderThickness" Value="0, 0, 1, 0"/>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" MinWidth="100" Binding="{Binding Id}" ElementStyle="{StaticResource sTextBlock}"/>
+                <DataGridTextColumn Header="Data zamówienia" MinWidth="200" Binding="{Binding DateOrder}" ElementStyle="{StaticResource sTextBlock}"/>
+                <DataGridTextColumn Header="Cena" MinWidth="200" Binding="{Binding Price}" ElementStyle="{StaticResource sTextBlock}"/>
+                <DataGridTextColumn Header="Status" MinWidth="200" Binding="{Binding Status}" ElementStyle="{StaticResource sTextBlock}"/>
+                <DataGridTextColumn Width="*" />
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="20, 10, 20, 20">
+                        <Label Content="Zamówione pizze" Margin="-3, 0, 0, 10" FontWeight="Medium" FontSize="16"/>
+                    <DataGrid ItemsSource="{Binding Pizzas}" GridLinesVisibility="None" HeadersVisibility="Column"  AutoGenerateColumns="False" CanUserAddRows="False" ColumnWidth="Auto" CanUserResizeColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background" Value="#f7f7f7"/>
+                                <Setter Property="Foreground" Value="#000000" />
+                                <Setter Property="Height" Value="40"/>
+                                <Setter Property="FontSize" Value="14" />
+                                <Setter Property="BorderBrush" Value="#dee2e6"/>
+                                <Setter Property="FontWeight" Value="Medium"/>
+                                <Setter Property="BorderThickness" Value="0, 0, 1, 0"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="Height" Value="Auto"/>
+                                <Setter Property="MinHeight" Value="40"/>
+                                <Setter Property="FontSize" Value="14" />
+                                <Setter Property="BorderBrush" Value="#dee2e6" />
+                                <Setter Property="BorderThickness" Value="0, 0, 0, 1"/>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="BorderBrush" Value="#dee2e6" />
+                                <Setter Property="Height" Value="Auto"/>
+                                <Setter Property="MinHeight" Value="40"/>
+                                <Setter Property="BorderThickness" Value="0, 0, 1, 0"/>
+                            </Style>
+                        </DataGrid.CellStyle>
+                        <DataGrid.Columns>
+                                <DataGridTextColumn Header="Id" MinWidth="100" Binding="{Binding Id}" ElementStyle="{StaticResource sTextBlock}"/>
+                                <DataGridTextColumn Header="Cena" MinWidth="200" Binding="{Binding Price}" ElementStyle="{StaticResource sTextBlock}"/>
+                            <DataGridTextColumn Width="*" />
+                        </DataGrid.Columns>
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                    <StackPanel Margin="20, 10, 20, 20">
+                                        <Label Content="Składniki pizzy" Margin="-3, 0, 0, 10" FontWeight="Medium" FontSize="16"/>
+                                    <DataGrid ItemsSource="{Binding Ingredients}" GridLinesVisibility="None" HeadersVisibility="Column"  AutoGenerateColumns="False" CanUserAddRows="False" ColumnWidth="Auto" CanUserResizeColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                    <DataGrid.ColumnHeaderStyle>
+                                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                                            <Setter Property="Background" Value="#f7f7f7"/>
+                                            <Setter Property="Foreground" Value="#000000" />
+                                            <Setter Property="Height" Value="40"/>
+                                            <Setter Property="FontSize" Value="14" />
+                                            <Setter Property="BorderBrush" Value="#dee2e6"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="BorderThickness" Value="0, 0, 1, 0"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        </Style>
+                                    </DataGrid.ColumnHeaderStyle>
+                                    <DataGrid.RowStyle>
+                                        <Style TargetType="{x:Type DataGridRow}">
+                                            <Setter Property="Height" Value="Auto"/>
+                                            <Setter Property="MinHeight" Value="40"/>
+                                            <Setter Property="FontSize" Value="14" />
+                                            <Setter Property="BorderBrush" Value="#dee2e6" />
+                                            <Setter Property="BorderThickness" Value="0, 0, 0, 1"/>
+                                        </Style>
+                                    </DataGrid.RowStyle>
+                                    <DataGrid.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="BorderBrush" Value="#E1E1E1" />
+                                            <Setter Property="BorderThickness" Value="0, 0, 1, 0"/>
+                                            <Setter Property="Height" Value="Auto"/>
+                                            <Setter Property="MinHeight" Value="40"/>
+                                        </Style>
+                                    </DataGrid.CellStyle>
+                                    <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Id" MinWidth="100" Binding="{Binding Id}" ElementStyle="{StaticResource sTextBlock}"/>
+                                                <DataGridTextColumn Header="Nazwa" MinWidth="200" Binding="{Binding Name}" ElementStyle="{StaticResource sTextBlock}"/>
+                                                <DataGridTextColumn Header="Cena" MinWidth="200" Binding="{Binding Price}" ElementStyle="{StaticResource sTextBlock}"/>
+                                        <DataGridTextColumn Width="*" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                              </StackPanel>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
+                    </DataGrid>
+                    </StackPanel>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+    </Grid>
+</Window>
