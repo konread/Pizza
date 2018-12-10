@@ -26,6 +26,67 @@ namespace WebService.Controllers
             return Ok(jobject);
         }
 
+        [HttpGet]
+        [Route("api/Order/GetAllWithPizzasAndIngredients")]
+        public IHttpActionResult GetAllWithPizzasAndIngredients()
+        {
+            var orders = db.Orders;
+            if (orders == null)
+            {
+                return BadRequest("Table of orders is empty!");
+            }
+
+            JArray jArray  = new JArray();
+            foreach (var order in orders)
+            {
+                JObject tmp_obj = new JObject();
+                tmp_obj.Add("Id_Order", order.Id_Order);
+                tmp_obj.Add("Order_Date", order.Order_Date);
+                tmp_obj.Add("Price", order.Price);
+                tmp_obj.Add("Status", order.Status);
+
+                var orderedPizzas = db.OrderedPizzas.Where(r => r.Id_Order == order.Id_Order);
+                if (orderedPizzas == null)
+                {
+                    break;
+                }
+
+                JArray jorderedPizzas = new JArray();
+                foreach(var orderedPizza in orderedPizzas)
+                {
+                    JObject jpizza = new JObject();
+                    jpizza.Add("Id_Order", orderedPizza.Id_Order);
+                    jpizza.Add("Price", orderedPizza.Price);
+
+                    JArray jingredients = new JArray();
+                    var ingredients = db.IngredientsOfOrderedPizza.Where(r => r.Id_Ordered_Pizza == orderedPizza.Id_Ordered_Pizza);
+                    foreach(var ingredient in ingredients)
+                    {
+                        var ingr = db.Ingredients.Find(ingredient.Id_Ingredient);
+                        if (ingr == null)
+                        {
+                            continue;
+                        }
+
+                        JObject jingredient = new JObject();
+                        jingredient.Add("Name",ingr.Name);
+                        jingredient.Add("Price", ingr.Price);
+
+                        jingredients.Add(jingredient);
+                    }
+
+                    jpizza.Add("Ingredients", jingredients);
+                    jorderedPizzas.Add(jpizza);
+                }
+
+                tmp_obj.Add("orderedPizzas", jorderedPizzas);
+                jArray.Add(tmp_obj);
+            }
+            JObject jobject = new JObject();
+            jobject.Add("Orders", jArray);
+            return Ok(jobject);
+        }
+
         //api/Order/Get/1
         [HttpGet]
         [Route("api/Order/Get/{id}")]
