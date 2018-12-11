@@ -213,5 +213,122 @@ namespace WebService.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+        [HttpPost]
+        [Route("api/Order/AddWithPizzaAndIngredients")]
+        [ResponseType(typeof(Order))]
+        public async Task<IHttpActionResult> AddWithPizzaAndIngredients(Order order)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (order.Price == 0)
+            {
+                return BadRequest("Empty field Price in request json");
+            }
+
+            if (order.Id_Customer == 0)
+            {
+                return BadRequest("Empty field Id_Customer in request json");
+            }
+
+            if (order.OrderedPizzas == null)
+            {
+                return BadRequest("Empty field OrderedPizzas in request json");
+            }
+
+            foreach(var pizza in order.OrderedPizzas)
+            {
+                if (pizza.Price == 0)
+                {
+                    return BadRequest("Empty or invalid field Price in pizza in request json");
+                }
+
+                if (pizza.IngredientsOfOrderedPizza == null)
+                {
+                    return BadRequest("Empty field IngredientsOfOrderedPizza in request json");
+                }
+
+                foreach(var ingr in pizza.IngredientsOfOrderedPizza)
+                {
+                    if (ingr.Id_Ingredient == 0)
+                    {
+                        return BadRequest("Empty field Id_Ingredient in request json");
+                    }
+
+                }
+            }
+
+            DateTime date = DateTime.UtcNow.ToLocalTime();
+
+            db.Orders.Add(new Order() {
+                Id_Customer = order.Id_Customer,
+                Price = order.Price,
+                Order_Date = date,
+                Status = "Nowe"
+            });
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            var orderedPizzas = order.OrderedPizzas;
+            var newOrder = db.Orders.Where(r => r.Id_Customer == order.Id_Customer).ToList().LastOrDefault();
+            if (newOrder == null)
+            {
+                return BadRequest("Order for customerid "+order.Id_Customer+" doesn't exist!");
+            }
+
+            foreach (var pizza in orderedPizzas)
+            {
+                db.OrderedPizzas.Add(new OrderedPizza() {
+                    Id_Order = newOrder.Id_Order,
+                    Price = pizza.Price
+                });
+
+                try
+                {
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException e)
+                {
+                    return BadRequest(e.Message);
+                }
+
+                var IdOrderedPizza = db.OrderedPizzas.Where(r => r.Id_Order == newOrder.Id_Order).
+                                        ToList().LastOrDefault().Id_Ordered_Pizza;
+                foreach(var ingr in pizza.IngredientsOfOrderedPizza)
+                {
+                    var existedIngr = db.Ingredients.Find(ingr.Id_Ingredient);
+                    if (existedIngr == null)
+                    {
+                        return BadRequest("Unknown ingredient id: "+ingr.Id_Ingredient);
+                    }
+
+                    db.IngredientsOfOrderedPizza.Add(new IngredientOfOrderedPizza() {
+                        Id_Ordered_Pizza = IdOrderedPizza,
+                        Id_Ingredient = existedIngr.Id_Ingredient
+                    });
+                }
+            }
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
     }
 }

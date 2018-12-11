@@ -19,6 +19,7 @@ namespace WebService.Models
         [DataMember]
         public decimal Price { get; set; }
 
+        [DataMember]
         public virtual ICollection<IngredientOfOrderedPizza> IngredientsOfOrderedPizza { get; set; }
         public virtual Order Orders { get; set; }
 

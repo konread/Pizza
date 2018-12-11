@@ -28,6 +28,7 @@ namespace WebService.Models
         public string Status { get; set; }//NOWE,REALIZOWANE,ZAKONCZONE
 
         public virtual Customer Customers { get; set; }
+        [DataMember]
         public virtual ICollection<OrderedPizza> OrderedPizzas { get; set; }
 
         public Order() { }
