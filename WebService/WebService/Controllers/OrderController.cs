@@ -41,6 +41,7 @@ namespace WebService.Controllers
             {
                 JObject tmp_obj = new JObject();
                 tmp_obj.Add("Id_Order", order.Id_Order);
+                tmp_obj.Add("Id_Customer", order.Id_Customer);
                 tmp_obj.Add("Order_Date", order.Order_Date);
                 tmp_obj.Add("Price", order.Price);
                 tmp_obj.Add("Status", order.Status);
