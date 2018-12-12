@@ -118,15 +118,17 @@ namespace WebService.Controllers
             {
                 return BadRequest("Missing or invalid customer.House_Number field in object!");
             }
-
-            db.Customers.Add(new Customer() {
+            var customer = new Customer()
+            {
                 First_Name = name,
                 Surname = surname,
                 Street_Name = streetName,
                 House_Number = houseNumber,
                 City_Name = cityName,
                 Postal_code = postalCode
-            });
+            };
+
+            db.Customers.Add(customer);
 
             try
             {
@@ -137,7 +139,7 @@ namespace WebService.Controllers
                 return BadRequest(e.Message);
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(customer);
         }
 
         private string ToTitleCase(string s)
