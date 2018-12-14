@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public class GetAll
+    public class GetAllIngredients
     {
         public List<Ingredient> Ingredients { get; set; }
     }

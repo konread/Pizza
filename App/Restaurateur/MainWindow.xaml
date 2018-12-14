@@ -53,17 +53,30 @@
                 </Style>
             </DataGrid.CellStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" MinWidth="100" Binding="{Binding Id}" ElementStyle="{StaticResource sTextBlock}"/>
-                <DataGridTextColumn Header="Data zamówienia" MinWidth="200" Binding="{Binding DateOrder}" ElementStyle="{StaticResource sTextBlock}"/>
-                <DataGridTextColumn Header="Cena" MinWidth="200" Binding="{Binding Price}" ElementStyle="{StaticResource sTextBlock}"/>
-                <DataGridTextColumn Header="Status" MinWidth="200" Binding="{Binding Status}" ElementStyle="{StaticResource sTextBlock}"/>
+                <!--<DataGridTextColumn Header="Id" MinWidth="100" Binding="{Binding Id_Order}" ElementStyle="{StaticResource sTextBlock}"/>-->
+                <DataGridTextColumn Header="Data zamówienia" MinWidth="300" Binding="{Binding Order_Date}" ElementStyle="{StaticResource sTextBlock}"/>
+                <DataGridTextColumn Header="Cena" MinWidth="200" Binding="{Binding Price, StringFormat={}{0:0.00}}" ElementStyle="{StaticResource sTextBlock}"/>
+                <DataGridTextColumn Header="Klient" MinWidth="400" Binding="{Binding Client}" ElementStyle="{StaticResource sTextBlock}"/>
+                <DataGridTemplateColumn Header="Status" MinWidth="200">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox 
+                                
+                              SelectionChanged="ComboBox_SelectionChanged"
+                                
+                              IsEditable="True" 
+                              Text="{Binding Status}" 
+                              ItemsSource="{Binding OrderStatus}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Width="*" />
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <StackPanel Margin="20, 10, 20, 20">
                         <Label Content="Zamówione pizze" Margin="-3, 0, 0, 10" FontWeight="Medium" FontSize="16"/>
-                    <DataGrid ItemsSource="{Binding Pizzas}" GridLinesVisibility="None" HeadersVisibility="Column"  AutoGenerateColumns="False" CanUserAddRows="False" ColumnWidth="Auto" CanUserResizeColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <DataGrid ItemsSource="{Binding orderedPizzas}" GridLinesVisibility="None" HeadersVisibility="Column"  AutoGenerateColumns="False" CanUserAddRows="False" ColumnWidth="Auto" CanUserResizeColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -95,15 +108,15 @@
                             </Style>
                         </DataGrid.CellStyle>
                         <DataGrid.Columns>
-                                <DataGridTextColumn Header="Id" MinWidth="100" Binding="{Binding Id}" ElementStyle="{StaticResource sTextBlock}"/>
-                                <DataGridTextColumn Header="Cena" MinWidth="200" Binding="{Binding Price}" ElementStyle="{StaticResource sTextBlock}"/>
+                                <!--<DataGridTextColumn Header="Id" MinWidth="100" Binding="{Binding Id_Order}" ElementStyle="{StaticResource sTextBlock}"/>-->
+                                <DataGridTextColumn Header="Cena" MinWidth="200" Binding="{Binding Price, StringFormat={}{0:0.00}}" ElementStyle="{StaticResource sTextBlock}"/>
                             <DataGridTextColumn Width="*" />
                         </DataGrid.Columns>
                         <DataGrid.RowDetailsTemplate>
                             <DataTemplate>
                                     <StackPanel Margin="20, 10, 20, 20">
                                         <Label Content="Składniki pizzy" Margin="-3, 0, 0, 10" FontWeight="Medium" FontSize="16"/>
-                                    <DataGrid ItemsSource="{Binding Ingredients}" GridLinesVisibility="None" HeadersVisibility="Column"  AutoGenerateColumns="False" CanUserAddRows="False" ColumnWidth="Auto" CanUserResizeColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <DataGrid ItemsSource="{Binding IngredientsOfOrderedPizza}" GridLinesVisibility="None" HeadersVisibility="Column"  AutoGenerateColumns="False" CanUserAddRows="False" ColumnWidth="Auto" CanUserResizeColumns="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                     <DataGrid.ColumnHeaderStyle>
                                         <Style TargetType="{x:Type DataGridColumnHeader}">
                                             <Setter Property="Background" Value="#f7f7f7"/>
@@ -134,9 +147,9 @@
                                         </Style>
                                     </DataGrid.CellStyle>
                                     <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Id" MinWidth="100" Binding="{Binding Id}" ElementStyle="{StaticResource sTextBlock}"/>
+                                                <!--<DataGridTextColumn Header="Id" MinWidth="100" Binding="{Binding Id_Ingredient}" ElementStyle="{StaticResource sTextBlock}"/>-->
                                                 <DataGridTextColumn Header="Nazwa" MinWidth="200" Binding="{Binding Name}" ElementStyle="{StaticResource sTextBlock}"/>
-                                                <DataGridTextColumn Header="Cena" MinWidth="200" Binding="{Binding Price}" ElementStyle="{StaticResource sTextBlock}"/>
+                                                <DataGridTextColumn Header="Cena" MinWidth="200" Binding="{Binding Price, StringFormat={}{0:0.00}}" ElementStyle="{StaticResource sTextBlock}"/>
                                         <DataGridTextColumn Width="*" />
                                     </DataGrid.Columns>
                                 </DataGrid>

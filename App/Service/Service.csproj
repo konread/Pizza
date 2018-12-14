@@ -45,8 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data.cs" />
-    <Compile Include="GetAll.cs" />
+    <Compile Include="GetAllIngredients.cs" />
+    <Compile Include="GetAllOrders.cs" />
     <Compile Include="GetAllWithIngredients.cs" />
+    <Compile Include="PostAllOrders.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

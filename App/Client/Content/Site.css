@@ -8,6 +8,10 @@
     padding-right: 15px;
 }
 
+.error{
+    color:red;
+}
+
 /* Color */
 
 .bg-red-light {
@@ -108,9 +112,16 @@
     background-color: #5A6617;
 }
 
-/* Label */
+.btn-cancel-order {
+    background-color: #FFFFFF;
+    color: #c3c3c3;
+}
 
-.lb-navbar {
+.btn-cancel-order:hover {
+    color: #000000;
+}
+    /* Label */
+    .lb-navbar {
     font-size: 24px;
     font-weight: 600;
 }

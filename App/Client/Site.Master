@@ -42,6 +42,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-red-light fixed-top">
             <div class="container">
                 <a class="navbar-brand lb-navbar pl-3" runat="server" href="~/">PełenBrzuszek</a>
+                <a class="nav-link text-white " href="~/About.aspx" runat="server" style="font-size:18px;">O nas</a>            
             </div>
         </nav>
 

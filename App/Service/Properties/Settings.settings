@@ -8,8 +8,17 @@
     <Setting Name="GetAllWithIngredients" Type="System.String" Scope="Application">
       <Value Profile="(Default)">api/OfferedPizza/GetAllWithIngredients</Value>
     </Setting>
-    <Setting Name="GetAll" Type="System.String" Scope="Application">
+    <Setting Name="GetAllIngredients" Type="System.String" Scope="Application">
       <Value Profile="(Default)">api/Ingredient/GetAll</Value>
+    </Setting>
+    <Setting Name="GetAllOrders" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">api/Order/GetAll</Value>
+    </Setting>
+    <Setting Name="GetCustomerById" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">api/Customer/Get/</Value>
+    </Setting>
+    <Setting Name="GetAllWithPizzasAndIngredients" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">api/Order/GetAllWithPizzasAndIngredients</Value>
     </Setting>
   </Settings>
 </SettingsFile>

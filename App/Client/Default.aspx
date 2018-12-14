@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row my-4">
                 <div class="col-lg-8">
-                    <img class="img-fluid rounded" src="Image/1.jpg" alt="">
+                    <img class="img-fluid rounded" src="Image/logo.jpg" alt="">
                 </div>
                 
                 <div class="col-lg-4">
@@ -31,20 +31,24 @@
                     <div class="col-md-4 mb-4">
                         <div class="card h-100">
                             
-                            <div class="card-header text-center"><img src="Image/2.png" alt=""></div>
+                            <div class="card-header text-center"><img src="Image/<%# Container.DataItemIndex%>.png" alt=""></div>
                             <div class="card-body">
                                 <h2 class="card-title lb-title-menu"><%# Eval("Name") %></h2>
-                                <p class="card-text lb-description-menu">ciasto, sos pomidorowy, ser, szynka, kabanosy, boczek wędzony, salami,</p>
-                            </div>
-        
+                                <p class="card-text lb-description-menu">
+                                    <%# ((List<Model.Ingredient>)Eval("Ingredients"))[0].Name %>,
+                                    <%# ((List<Model.Ingredient>)Eval("Ingredients"))[1].Name %>,
+                                    <%# ((List<Model.Ingredient>)Eval("Ingredients"))[2].Name %>
+                                    . . .
+                                </p>
+                            </div>  
                             <div class="card-footer bg-yellow">
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <asp:Button ID="BtnOfferDetails" runat="server" Text="Zobacz" OnClick="BtnOfferDetails_Click" CssClass="btn bg-red-light btn-view" commandArgument='<%# Container.DataItemIndex%>'/>
                                     </div>
                                     <div class="col-sm-6 text-right">
-                                        <asp:Label ID="LbPrice" runat="server" Text=<%# Eval("Price") %> CssClass="lb-price-menu"></asp:Label> 
-                                        <asp:Label ID="LbCurrency" runat="server" Text=",00 PLN"></asp:Label>
+                                        <asp:Label ID="LbPrice" runat="server" Text=<%# string.Format("{0:0.00}", Eval("Price"))%> CssClass="lb-price-menu"></asp:Label> 
+                                        <asp:Label ID="LbCurrency" runat="server" Text=" PLN"></asp:Label>
                                     </div>
                                 </div>
                             </div>

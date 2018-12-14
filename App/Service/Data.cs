@@ -3,7 +3,9 @@ using Newtonsoft.Json;
 using Service;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
+using System.Text;
 
 namespace WebService
 {
@@ -27,60 +29,102 @@ namespace WebService
 
         public static List<Ingredient> GetListIngredientsAll()
         {
-            GetAll getAll = null;
+            GetAllIngredients getAllIngredients = null;
 
             using (var httpClient = new HttpClient())
             {
-                Uri uri = new Uri(Service.Properties.Settings.Default.Host + Service.Properties.Settings.Default.GetAll);
+                Uri uri = new Uri(Service.Properties.Settings.Default.Host + Service.Properties.Settings.Default.GetAllIngredients);
 
                 var response = httpClient.GetStringAsync(uri).Result;
 
-                getAll = JsonConvert.DeserializeObject<GetAll>(response);
+                getAllIngredients = JsonConvert.DeserializeObject<GetAllIngredients>(response);
             }
 
-            return getAll.Ingredients;
+            return getAllIngredients.Ingredients;
         }
 
         public static List<Order> GetListOrder()
         {
-            List<Ingredient> ingredients1 = new List<Ingredient>
+            GetAllOrders getAllOrders = null;
+
+            using (var httpClient = new HttpClient())
             {
-                new Ingredient() { Id_Ingredient = 1, Name = "Składnik 1", Price = 1.0 },
-                new Ingredient() { Id_Ingredient = 2, Name = "Składnik 2", Price = 1.0 },
-                new Ingredient() { Id_Ingredient= 3, Name = "Składnik 3", Price = 1.0 }
-            };
+                Uri uri = new Uri(Service.Properties.Settings.Default.Host + Service.Properties.Settings.Default.GetAllWithPizzasAndIngredients);
 
-            List<Ingredient> ingredients2 = new List<Ingredient>
+                var response = httpClient.GetStringAsync(uri).Result;
+
+                getAllOrders = JsonConvert.DeserializeObject<GetAllOrders>(response);
+            }
+
+            foreach(Order order in getAllOrders.Orders)
             {
-                new Ingredient() { Id_Ingredient = 4, Name = "Składnik 4", Price = 1.0 },
-                new Ingredient() { Id_Ingredient = 5, Name = "Składnik 5", Price = 1.0 },
-                new Ingredient() { Id_Ingredient = 6, Name = "Składnik 6", Price = 1.0 }
-            };
+                order.Client = GetCustomerById(order.Id_Customer);
+            }
 
-            List<Ingredient> ingredients3 = new List<Ingredient>
+            return getAllOrders.Orders;
+        }
+
+        public static Client GetCustomerById(int id)
+        {
+            Client client = null;
+
+            using (var httpClient = new HttpClient())
             {
-                new Ingredient() { Id_Ingredient = 1, Name = "Składnik 1", Price = 1.0 },
-                new Ingredient() { Id_Ingredient = 3, Name = "Składnik 3", Price = 1.0 },
-                new Ingredient() { Id_Ingredient = 5, Name = "Składnik 5", Price = 1.0 }
-            };
+                Uri uri = new Uri(Service.Properties.Settings.Default.Host + Service.Properties.Settings.Default.GetCustomerById + id);
 
-            List<OrderPizza> listOrdersPizza1 = new List<OrderPizza>();
-            listOrdersPizza1.Add(new OrderPizza(1, 3.00, ingredients1));
+                var response = httpClient.GetStringAsync(uri).Result;
 
-            List<OrderPizza> listOrdersPizza2 = new List<OrderPizza>();
-            listOrdersPizza2.Add(new OrderPizza(2, 3.00, ingredients2));
-            listOrdersPizza2.Add(new OrderPizza(3, 3.00, ingredients3));
+                client = JsonConvert.DeserializeObject<Client>(response);
+            }
 
-            Client client1 = new Client() { Name = "Jan", Surname = "Kowalski", City = "Lodz", Street = "Wolczanska", HouseNumber = "225", FlatNumber = "", Postcode = "00-000", PostOffice = "Lodz" };
-            Client client2 = new Client() { Name = "Robert", Surname = "Lewandowski", City = "Lodz", Street = "Wolczanska", HouseNumber = "225", FlatNumber = "", Postcode = "00-000", PostOffice = "Lodz" };
+            return client;
+        }
 
-            List<Order> listOrders = new List<Order>
+        public static void SetOrderStatus(int idOrder, string status)
+        {
+            using (var httpClient = new HttpClient())
             {
-                new Order() { Id = 1, Price = 3.00, DateOrder = "2018-10-11", Status = "Nowe", Client = client1, Pizzas = listOrdersPizza1 },
-                new Order() { Id = 2, Price = 3.00, DateOrder = "2018-10-11", Status = "Nowe", Client = client2, Pizzas = listOrdersPizza2 },
-            };
+                Uri uri = new Uri(Service.Properties.Settings.Default.Host + "api/Order/UpdateStatus?orderId=" + idOrder + "&status=" + status);
+                var result = httpClient.PostAsync(uri, null).Result;
+            }
+        }
 
-            return listOrders;
+        public static void SetListOrdersPizza(int idCustomer, double price, List<OrderPizza> orderPizzas)
+        {
+            PostAllOrders postAllOrders = new PostAllOrders(idCustomer, price, DateTime.Now, "NOWE", orderPizzas);
+
+            string body = JsonConvert.SerializeObject(postAllOrders);
+
+            using (var httpClient = new HttpClient())
+            {
+                Uri uri = new Uri(Service.Properties.Settings.Default.Host + "api/Order/AddWithPizzaAndIngredients");
+
+                var content = new StringContent(body, Encoding.UTF8, "application/json");
+                var result = httpClient.PostAsync(uri, content).Result;
+            }
+        }
+
+        public static Client SetCustomer(string first_Name, string surname, string city_Name, string street_Name, int house_Number, string postal_code)
+        {
+            Client client = null;
+
+            using (var httpClient = new HttpClient())
+            {
+                Uri uri = new Uri(Service.Properties.Settings.Default.Host + "api/Customer/Add" + "?" + "name=" + first_Name +  "&" + 
+                                                                                                        "surname=" + surname + "&" +
+                                                                                                        "streetName=" + street_Name + "&" +
+                                                                                                        "houseNumber=" + house_Number + "&" +
+                                                                                                        "cityName=" + city_Name + "&" +
+                                                                                                        "postalCode=" + postal_code );
+                var result = httpClient.PostAsync(uri, null).Result;
+
+                string jsonString = result.Content.ReadAsStringAsync().Result;
+                client = JsonConvert.DeserializeObject<Client>(jsonString);
+
+                Debug.WriteLine(result);
+            }
+
+            return client;
         }
     }
 }

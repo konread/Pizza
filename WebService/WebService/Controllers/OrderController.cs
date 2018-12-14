@@ -76,7 +76,7 @@ namespace WebService.Controllers
                         jingredients.Add(jingredient);
                     }
 
-                    jpizza.Add("Ingredients", jingredients);
+                    jpizza.Add("IngredientsOfOrderedPizza", jingredients);
                     jorderedPizzas.Add(jpizza);
                 }
 
@@ -268,7 +268,7 @@ namespace WebService.Controllers
                 Id_Customer = order.Id_Customer,
                 Price = order.Price,
                 Order_Date = date,
-                Status = "Nowe"
+                Status = "NOWE"
             });
 
             try

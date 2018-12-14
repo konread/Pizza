@@ -16,6 +16,9 @@ namespace Client.Helper
             public static readonly string ListIngredientsAll = "ListIngredientsAll";
             public static readonly string ListIngredientsOffer = "ListIngredientsOffer";
             public static readonly string ListOrdersPizza = "ListOrdersPizza";
+            public static readonly string SumOrderedPizzas = "SumOrderedPizzas";
+            public static readonly string TotalPriceOrderedPizzas = "TotalPriceOrderedPizzas";
+            public static readonly string ListIngredientsSelected = "ListIngredientsSelected";
         }
 
         public static void SetOfferPizza(HttpSessionState session, OfferedPizza offer)
@@ -58,6 +61,16 @@ namespace Client.Helper
             return (List<Ingredient>)session[SessionConstans.ListIngredientsOffer];
         }
 
+        public static void SetListIngredientsSelected(HttpSessionState session, List<Ingredient> listIngredientsSelected)
+        {
+            session[SessionConstans.ListIngredientsSelected] = listIngredientsSelected;
+        }
+
+        internal static List<Ingredient> GetListIngredientsSelected(HttpSessionState session)
+        {
+            return (List<Ingredient>)session[SessionConstans.ListIngredientsSelected];
+        }
+
         public static void SetListOrdersPizza(HttpSessionState session, List<OrderPizza> listOrdersPizza)
         {
             session[SessionConstans.ListOrdersPizza] = listOrdersPizza;
@@ -71,6 +84,26 @@ namespace Client.Helper
         internal static void RemoveListOrdersPizza(HttpSessionState session)
         {
             session.Remove(SessionConstans.ListOrdersPizza);
+        }
+
+        public static void SetSumOrderedPizzas(HttpSessionState session, double price)
+        {
+            session[SessionConstans.SumOrderedPizzas] = price;
+        }
+
+        internal static double GetSumOrderedPizzas(HttpSessionState session)
+        {
+            return session[SessionConstans.SumOrderedPizzas] != null ? (double)session[SessionConstans.SumOrderedPizzas] : 0.0;
+        }
+
+        public static void SetTotalPriceOrderedPizzas(HttpSessionState session, double price)
+        {
+            session[SessionConstans.TotalPriceOrderedPizzas] = price;
+        }
+
+        internal static double GetTotalPriceOrderedPizzas(HttpSessionState session)
+        {
+            return session[SessionConstans.TotalPriceOrderedPizzas] != null ? (double)session[SessionConstans.TotalPriceOrderedPizzas] : 0.0;
         }
     }
 }

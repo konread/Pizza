@@ -43,7 +43,7 @@
                 <div class="row mt-4">
                     <div class="col-md-12">
                         <asp:Label ID="LbPrice" runat="server" Text="0.00" CssClass="lb-price-order"></asp:Label> 
-                        <asp:Label ID="LbCurrency" runat="server" Text=",00 PLN" CssClass="lb-currency-order"></asp:Label>
+                        <asp:Label ID="LbCurrency" runat="server" Text=" PLN" CssClass="lb-currency-order"></asp:Label>
                     </div>
                 </div>
 

@@ -197,7 +197,7 @@ namespace WebService.Controllers
             foreach (var cust in custs)
             {
                 DateTime date = DateTime.UtcNow.ToLocalTime();
-                db.Orders.Add(new Order() { Id_Customer = cust.Id_Customer, Status = "Nowe", Order_Date = date });
+                db.Orders.Add(new Order() { Id_Customer = cust.Id_Customer, Status = "NOWE", Order_Date = date });
             }
             
             try

@@ -44,9 +44,36 @@ namespace Service.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("api/Ingredient/GetAll")]
-        public string GetAll {
+        public string GetAllIngredients {
             get {
-                return ((string)(this["GetAll"]));
+                return ((string)(this["GetAllIngredients"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("api/Order/GetAll")]
+        public string GetAllOrders {
+            get {
+                return ((string)(this["GetAllOrders"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("api/Customer/Get/")]
+        public string GetCustomerById {
+            get {
+                return ((string)(this["GetCustomerById"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("api/Order/GetAllWithPizzasAndIngredients")]
+        public string GetAllWithPizzasAndIngredients {
+            get {
+                return ((string)(this["GetAllWithPizzasAndIngredients"]));
             }
         }
     }
