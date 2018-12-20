@@ -34,9 +34,9 @@ namespace Client
 
         protected void BtnCancelOrder_Click(object sender, EventArgs e)
         {
-            Button cancelOrder = (Button) sender;
+            Button btnCancelOrder = (Button) sender;
 
-            int index = Convert.ToInt32(cancelOrder.CommandArgument.ToString());
+            int index = Convert.ToInt32(btnCancelOrder.CommandArgument.ToString());
 
             List<OrderPizza> listOrdersPizza = Helper.HelperSession.GetListOrdersPizza(Session);
 
@@ -55,8 +55,6 @@ namespace Client
             double totalSum = Properties.Settings.Default.PriceDeliveryAndService + partialSum;
 
             Helper.HelperSession.SetTotalPriceOrderedPizzas(Session, totalSum);
-
-            Debug.WriteLine("BtnCancelOrder_Click");
 
             Response.Redirect(Request.Url.AbsoluteUri);
         }

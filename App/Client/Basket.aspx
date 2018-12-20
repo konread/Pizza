@@ -42,7 +42,7 @@
                                         </p>
                                     </div>
                                     <div class="col-sm-2 text-right">
-                                        <asp:Button ID="cancelOrder" runat="server" Text="Anuluj" CssClass="btn btn-cancel-order" OnClick="BtnCancelOrder_Click" commandArgument='<%# Container.DataItemIndex%>'/>
+                                        <asp:Button ID="BtnCancelOrder" runat="server" Text="Anuluj" CssClass="btn btn-cancel-order" OnClick="BtnCancelOrder_Click" commandArgument='<%# Container.DataItemIndex%>'/>
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +122,7 @@
       <div class="modal-body">
         <div class="row mb-3">
             <div class="col-sm-6">
-                <asp:textbox runat="server" ID="Name" CssClass="form-control w-100" placeholder="Imię"/>
+                <asp:textbox runat="server" ID="Name" CssClass="form-control w-100" placeholder="Imię" required/>
 
                 <asp:RegularExpressionValidator ID="RegularExpressionValidator1" 
                                                 CssClass="error"
@@ -134,7 +134,7 @@
             </div>
 
             <div class="col-sm-6">
-                <asp:textbox runat="server" ID="Surname" CssClass="form-control w-100" placeholder="Nazwisko"/>
+                <asp:textbox runat="server" ID="Surname" CssClass="form-control w-100" placeholder="Nazwisko" required/>
 
                 <asp:RegularExpressionValidator ID="RegularExpressionValidator2" 
                                                 CssClass="error"
@@ -147,7 +147,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-sm-8">
-                <asp:textbox runat="server" ID="Street" CssClass="form-control w-100" placeholder="Ulica"/>
+                <asp:textbox runat="server" ID="Street" CssClass="form-control w-100" placeholder="Ulica" required/>
 
                 <asp:RegularExpressionValidator ID="RegularExpressionValidator3" 
                                                 CssClass="error"
@@ -159,7 +159,7 @@
             </div>
 
             <div class="col-sm-4">
-                <asp:textbox runat="server" ID="HouseNumber" CssClass="form-control w-100" placeholder="Numer domu"/>
+                <asp:textbox runat="server" ID="HouseNumber" CssClass="form-control w-100" placeholder="Numer domu" required/>
 
                 <asp:RegularExpressionValidator ID="RegularExpressionValidator4" 
                                                 CssClass="error"
@@ -172,7 +172,7 @@
         </div>
          <div class="row mb-3">
             <div class="col-sm-4">
-                <asp:textbox runat="server" ID="PostCode" CssClass="form-control w-100" placeholder="Kod pocztowy"/>
+                <asp:textbox runat="server" ID="PostCode" CssClass="form-control w-100" placeholder="Kod pocztowy" required/>
 
                 <asp:RegularExpressionValidator ID="RegularExpressionValidator7" 
                                 CssClass="error"
@@ -184,7 +184,7 @@
             </div>
 
             <div class="col-sm-8">
-                <asp:textbox runat="server" ID="City" CssClass="form-control w-100" placeholder="Poczta"/>
+                <asp:textbox runat="server" ID="City" CssClass="form-control w-100" placeholder="Poczta" required/>
 
                 <asp:RegularExpressionValidator ID="RegularExpressionValidator8" 
                                                 CssClass="error"
