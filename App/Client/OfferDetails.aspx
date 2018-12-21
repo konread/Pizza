@@ -8,25 +8,49 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="table-responsive pt-4">
-                    <asp:GridView ID = "GvListIngredients"
-                                  runat="server"
-                                  AutoGenerateColumns ="False" 
-                                  CssClass="table table-bordered table-condensed">
-                        <HeaderStyle CssClass="bg-gray" />
+                    <asp:GridView 
+                        ID = "GvListIngredients"
+                        runat="server"
+                        AutoGenerateColumns ="False" 
+                        CssClass="table table-bordered table-condensed">
+                        
+                        <HeaderStyle
+                            CssClass="bg-gray" />
                         <Columns>
-                            <asp:BoundField DataField="Name" HeaderText="Składnik" 
+                            <asp:BoundField 
+                                DataField="Name" 
+                                HeaderText="Składnik" 
                                 ReadOnly="True"  />
-                            <asp:BoundField DataField="Price" DataFormatString="{0:c}" 
-                                HeaderText="Cena" HtmlEncode="False" 
+                            
+                            <asp:BoundField 
+                                DataField="Price" 
+                                DataFormatString="{0:c}" 
+                                HeaderText="Cena" 
+                                HtmlEncode="False" 
                                 SortExpression="UnitPrice" />
+                            
                             <asp:TemplateField>
                                 <EditItemTemplate>
-                                    <asp:CheckBox ID="CbStatus" runat="server" Checked='<%# Bind("Status") %>' Enabled="true" AutoPostBack="True" OnCliOnCheckedChanged="CbStatus_CheckedChanged" />
+                                    <asp:CheckBox 
+                                        ID="CbStatus" 
+                                        runat="server" 
+                                        Checked='<%# Bind("Status") %>' 
+                                        Enabled="true" 
+                                        AutoPostBack="True" 
+                                        OnCliOnCheckedChanged="CbStatus_CheckedChanged" />
                                 </EditItemTemplate>
+                                
                                 <ItemTemplate>
-                                    <asp:CheckBox ID="CbStatus" runat="server" Checked='<%# Bind("Status") %>' Enabled="true" AutoPostBack="True" OnCheckedChanged="CbStatus_CheckedChanged"/>
+                                    <asp:CheckBox 
+                                        ID="CbStatus" 
+                                        runat="server" 
+                                        Checked='<%# Bind("Status") %>' 
+                                        Enabled="true" 
+                                        AutoPostBack="True" 
+                                        OnCheckedChanged="CbStatus_CheckedChanged"/>
                                 </ItemTemplate>
-                                <ItemStyle HorizontalAlign="Center" />
+                                <ItemStyle 
+                                    HorizontalAlign="Center" />
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>

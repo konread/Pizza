@@ -1,11 +1,10 @@
 ﻿<%@ Page Title="Basket" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Basket.aspx.cs" Inherits="Client.Basket" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-        <div class="container mt-4">
-            <asp:Label ID="LbTitle" runat="server" Text="Koszyk" CssClass="lb-title"></asp:Label> 
+    <div class="container mt-4">
+        <asp:Label ID="LbTitle" runat="server" Text="Koszyk" CssClass="lb-title"></asp:Label> 
 
-            <div class="mb-3"></div>
-
+        <div class="mb-3"></div>
             <asp:ListView ID="LvListOrdersPizza" ItemPlaceholderID="itemPlaceHolder" GroupPlaceholderID="groupPlaceHolder" GroupItemCount="1" runat="server">
                 <LayoutTemplate>
                     <asp:PlaceHolder ID="groupPlaceHolder" runat="server"></asp:PlaceHolder>
@@ -30,7 +29,6 @@
                                         <asp:Label ID="Label1" runat="server" Text=<%# string.Format("{0:0.00}", Eval("Price"))%> CssClass="lb-price-basket-order"></asp:Label> 
                                         <asp:Label ID="Label2" runat="server" Text=" PLN"></asp:Label>
                                     </div>
-
                                 </div>
                              </div>
                             <div class="card-body">
@@ -42,8 +40,7 @@
                                         </p>
                                     </div>
                                     <div class="col-sm-2 text-right">
-                                        <asp:Button ID="BtnCancelOrder" runat="server" Text="Anuluj" CssClass="btn btn-cancel-order" OnClick="BtnCancelOrder_Click" commandArgument='<%# Container.DataItemIndex%>'/>
-                                    </div>
+                                        <asp:Button ID="cancelOrder" runat="server" Text="Anuluj" CssClass="btn btn-cancel-order" OnClick="CancelOrder_Click" commandArgument='<%# Container.DataItemIndex%>'/>                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -101,108 +98,169 @@
             <div class="col-sm-8"></div>
         
             <div class="col-sm-4 mt-3">
-        <button type="button" class="btn btn-register bg-green" data-toggle="modal" data-target="#exampleModal">
-  Przejdź do kasy
-</button>
+                <button type="button" class="btn btn-register bg-green" data-toggle="modal" data-target="#exampleModal">Przejdź do kasy</button>
             </div>
         </div>
 
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-red-light">
+                        <h5 class="modal-title text-white" id="exampleModalLabel">Adres dostawy</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+      
+                    <div class="modal-body">
+                        <div class="row mb-4">
+                            <div class="col-sm-6">
+                                <asp:textbox runat="server" ID="Name" CssClass="form-control w-100" placeholder="Imię"/>
 
+                                <asp:RegularExpressionValidator 
+                                    Display="Dynamic"
+                                    ID="RegularExpressionValidator1" 
+                                    CssClass="error"
+                                    runat="server"
+                                    ControlToValidate="Name" 
+                                    ErrorMessage="Niepoprawne!"
+                                    ValidationExpression="^[a-zA-Z]+$">
+                                </asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator 
+                                    ValidationGroup='valGroup1'
+                                    Display="Dynamic"
+                                    id="RequiredFieldValidator1" 
+                                    runat="server"
+                                    ControlToValidate="Name"
+                                    ErrorMessage="Wymagane!"
+                                    ForeColor="Red">
+                                </asp:RequiredFieldValidator>
+                            </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-red-light">
-        <h5 class="modal-title text-white" id="exampleModalLabel">Adres dostawy</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row mb-3">
-            <div class="col-sm-6">
-                <asp:textbox runat="server" ID="Name" CssClass="form-control w-100" placeholder="Imię" required/>
+                            <div class="col-sm-6">
+                                <asp:textbox runat="server" ID="Surname" CssClass="form-control w-100" placeholder="Nazwisko"/>
 
-                <asp:RegularExpressionValidator ID="RegularExpressionValidator1" 
-                                                CssClass="error"
-                                                runat="server"
-                                                ControlToValidate="Name" 
-                                                ErrorMessage="Niepoprawne!"
-                                                ValidationExpression="^[a-zA-Z]+$">
-                </asp:RegularExpressionValidator>
-            </div>
+                                <asp:RegularExpressionValidator 
+                                    Display="Dynamic"
+                                    ID="RegularExpressionValidator2" 
+                                    CssClass="error"
+                                    runat="server"
+                                    ControlToValidate="Surname" 
+                                    ErrorMessage="Niepoprawne!"
+                                    ValidationExpression="^[a-zA-Z]+$">
+                                </asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator
+                                    ValidationGroup='valGroup1'
+                                    Display="Dynamic"
+                                    id="RequiredFieldValidator2" runat="server"
+                                    ControlToValidate="Surname"
+                                    ErrorMessage="Wymagane!"
+                                    ForeColor="Red">
+                                </asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+                    
+                        <div class="row mb-4">
+                            <div class="col-sm-8">
+                                <asp:textbox runat="server" ID="Street" CssClass="form-control w-100" placeholder="Ulica"/>
 
-            <div class="col-sm-6">
-                <asp:textbox runat="server" ID="Surname" CssClass="form-control w-100" placeholder="Nazwisko" required/>
+                                <asp:RegularExpressionValidator 
+                                    Display="Dynamic"
+                                    ID="RegularExpressionValidator3" 
+                                    CssClass="error"
+                                    runat="server"
+                                    ControlToValidate="Street" 
+                                    ErrorMessage="Niepoprawna!"
+                                    ValidationExpression="^[a-zA-Z]+$">
+                                </asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator
+                                    ValidationGroup='valGroup1'
+                                    Display="Dynamic"
+                                    id="RequiredFieldValidator3" 
+                                    runat="server"
+                                    ControlToValidate="Street"
+                                    ErrorMessage="Wymagana!"
+                                    ForeColor="Red">
+                                </asp:RequiredFieldValidator>
+                            </div>
 
-                <asp:RegularExpressionValidator ID="RegularExpressionValidator2" 
-                                                CssClass="error"
-                                                runat="server"
-                                                ControlToValidate="Surname" 
-                                                ErrorMessage="Niepoprawne!"
-                                                ValidationExpression="^[a-zA-Z]+$">
-                </asp:RegularExpressionValidator>
+                            <div class="col-sm-4">
+                                <asp:textbox runat="server" ID="HouseNumber" CssClass="form-control w-100" placeholder="Numer domu"/>
+
+                                <asp:RegularExpressionValidator 
+                                    Display="Dynamic"
+                                    ID="RegularExpressionValidator4" 
+                                    CssClass="error"
+                                    runat="server"
+                                    ControlToValidate="HouseNumber" 
+                                    ErrorMessage="Niepoprawny!"
+                                    ValidationExpression="\d{1,3}">
+                                </asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator 
+                                    ValidationGroup='valGroup1'
+                                    Display="Dynamic"
+                                    id="RequiredFieldValidator6" 
+                                    runat="server"
+                                    ControlToValidate="HouseNumber"
+                                    ErrorMessage="Wymagany!" 
+                                    ForeColor="Red">
+                                </asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+         
+                        <div class="row mb-3">
+                            <div class="col-sm-4">
+                                <asp:textbox runat="server" ID="PostCode" CssClass="form-control w-100" placeholder="Kod pocztowy"/>
+
+                                <asp:RegularExpressionValidator 
+                                    ID="RegularExpressionValidator7" 
+                                    Display="Dynamic"
+                                    CssClass="error"
+                                    runat="server"
+                                    ControlToValidate="PostCode" 
+                                    ErrorMessage="Niepoprawny!"
+                                    ValidationExpression="\d{2}-\d{3}">
+                                </asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator 
+                                    ValidationGroup='valGroup1'
+                                    Display="Dynamic"
+                                    id="RequiredFieldValidator7" runat="server"
+                                    ControlToValidate="PostCode"
+                                    ErrorMessage="Wymagany!"
+                                    ForeColor="Red">
+                                </asp:RequiredFieldValidator>
+                            </div>
+
+                            <div class="col-sm-8">
+                                <asp:textbox runat="server" ID="City" CssClass="form-control w-100" placeholder="Poczta"/>
+
+                                <asp:RegularExpressionValidator 
+                                    Display="Dynamic"
+                                    ID="RegularExpressionValidator8" 
+                                    CssClass="error"
+                                    runat="server"
+                                    ControlToValidate="City" 
+                                    ErrorMessage="Niepoprawna!"
+                                    ValidationExpression="^[a-zA-Z]+$">
+                                </asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator 
+                                    ValidationGroup='valGroup1'
+                                    Display="Dynamic"
+                                    id="RequiredFieldValidator8" runat="server"
+                                    ControlToValidate="City"
+                                    ErrorMessage="Wymagana!"
+                                    ForeColor="Red">
+                                </asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+                    </div>
+      
+                    <div class="modal-footer">
+                        <asp:Button ID="BtnOfferDetails" runat="server" Text="Anuluj" CssClass="btn btn-cancel-address text-secondary" data-dismiss="modal"/>
+                        <asp:Button ID="AcceptOrder" ValidationGroup='valGroup1' runat="server" Text="Zamawiaj" CssClass="btn bg-green btn-accept-address pl-4 pr-4" OnClick="AcceptOrder_Click"/>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row mb-3">
-            <div class="col-sm-8">
-                <asp:textbox runat="server" ID="Street" CssClass="form-control w-100" placeholder="Ulica" required/>
-
-                <asp:RegularExpressionValidator ID="RegularExpressionValidator3" 
-                                                CssClass="error"
-                                                runat="server"
-                                                ControlToValidate="Street" 
-                                                ErrorMessage="Niepoprawna!"
-                                                ValidationExpression="^[a-zA-Z]+$">
-                </asp:RegularExpressionValidator>
-            </div>
-
-            <div class="col-sm-4">
-                <asp:textbox runat="server" ID="HouseNumber" CssClass="form-control w-100" placeholder="Numer domu" required/>
-
-                <asp:RegularExpressionValidator ID="RegularExpressionValidator4" 
-                                                CssClass="error"
-                                                runat="server"
-                                                ControlToValidate="HouseNumber" 
-                                                ErrorMessage="Niepoprawny!"
-                                                ValidationExpression="\d{1,3}">
-                </asp:RegularExpressionValidator>
-            </div>
-        </div>
-         <div class="row mb-3">
-            <div class="col-sm-4">
-                <asp:textbox runat="server" ID="PostCode" CssClass="form-control w-100" placeholder="Kod pocztowy" required/>
-
-                <asp:RegularExpressionValidator ID="RegularExpressionValidator7" 
-                                CssClass="error"
-                                runat="server"
-                                ControlToValidate="PostCode" 
-                                ErrorMessage="Niepoprawny!"
-                                ValidationExpression="\d{2}-\d{3}">
-                </asp:RegularExpressionValidator>
-            </div>
-
-            <div class="col-sm-8">
-                <asp:textbox runat="server" ID="City" CssClass="form-control w-100" placeholder="Poczta" required/>
-
-                <asp:RegularExpressionValidator ID="RegularExpressionValidator8" 
-                                                CssClass="error"
-                                                runat="server"
-                                                ControlToValidate="City" 
-                                                ErrorMessage="Niepoprawna poczta"
-                                                ValidationExpression="^[a-zA-Z]+$">
-                </asp:RegularExpressionValidator>
-            </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <asp:Button ID="BtnOfferDetails" runat="server" Text="Anuluj" CssClass="btn btn-cancel-address text-secondary" data-dismiss="modal"/>
-        <asp:Button ID="AcceptOrder" runat="server" Text="Zamawiaj" CssClass="btn bg-green btn-accept-address pl-4 pr-4" OnClick="AcceptOrder_Click"/>
-      </div>
-    </div>
-  </div>
-</div>
-
     </div>
 </asp:Content>

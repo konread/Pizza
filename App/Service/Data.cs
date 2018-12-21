@@ -13,50 +13,25 @@ namespace WebService
     {
         public static List<OfferedPizza> GetListOffersPizza()
         {
-            GetAllWithIngredients getAllWithIngredients = null;
+            string url = Service.Properties.Settings.Default.Host + Service.Properties.Settings.Default.GetAllWithIngredients;
 
-            using (var httpClient = new HttpClient())
-            {
-                Uri uri = new Uri(Service.Properties.Settings.Default.Host + Service.Properties.Settings.Default.GetAllWithIngredients);
-                
-                var response = httpClient.GetStringAsync(uri).Result;
-
-                getAllWithIngredients = JsonConvert.DeserializeObject<GetAllWithIngredients>(response);
-            }
-
-            return getAllWithIngredients.Pizzas;
+            return Get<GetAllWithIngredients>(url).Pizzas;
         }
 
         public static List<Ingredient> GetListIngredientsAll()
         {
-            GetAllIngredients getAllIngredients = null;
+            string url = Service.Properties.Settings.Default.Host + Service.Properties.Settings.Default.GetAllIngredients;
 
-            using (var httpClient = new HttpClient())
-            {
-                Uri uri = new Uri(Service.Properties.Settings.Default.Host + Service.Properties.Settings.Default.GetAllIngredients);
-
-                var response = httpClient.GetStringAsync(uri).Result;
-
-                getAllIngredients = JsonConvert.DeserializeObject<GetAllIngredients>(response);
-            }
-
-            return getAllIngredients.Ingredients;
+            return Get<GetAllIngredients>(url).Ingredients;
         }
 
         public static List<Order> GetListOrder()
         {
-            GetAllOrders getAllOrders = null;
+            string url = Service.Properties.Settings.Default.Host + Service.Properties.Settings.Default.GetAllWithPizzasAndIngredients;
 
-            using (var httpClient = new HttpClient())
-            {
-                Uri uri = new Uri(Service.Properties.Settings.Default.Host + Service.Properties.Settings.Default.GetAllWithPizzasAndIngredients);
+            GetAllOrders getAllOrders = Get<GetAllOrders>(url);
 
-                var response = httpClient.GetStringAsync(uri).Result;
-
-                getAllOrders = JsonConvert.DeserializeObject<GetAllOrders>(response);
-            }
-
-            foreach(Order order in getAllOrders.Orders)
+            foreach (Order order in getAllOrders.Orders)
             {
                 order.Client = GetCustomerById(order.Id_Customer);
             }
@@ -66,18 +41,9 @@ namespace WebService
 
         public static Client GetCustomerById(int id)
         {
-            Client client = null;
+            string url = Service.Properties.Settings.Default.Host + Service.Properties.Settings.Default.GetCustomerById + id;
 
-            using (var httpClient = new HttpClient())
-            {
-                Uri uri = new Uri(Service.Properties.Settings.Default.Host + Service.Properties.Settings.Default.GetCustomerById + id);
-
-                var response = httpClient.GetStringAsync(uri).Result;
-
-                client = JsonConvert.DeserializeObject<Client>(response);
-            }
-
-            return client;
+            return Get<Client>(url);
         }
 
         public static void SetOrderStatus(int idOrder, string status)
@@ -100,6 +66,7 @@ namespace WebService
                 Uri uri = new Uri(Service.Properties.Settings.Default.Host + "api/Order/AddWithPizzaAndIngredients");
 
                 var content = new StringContent(body, Encoding.UTF8, "application/json");
+
                 var result = httpClient.PostAsync(uri, content).Result;
             }
         }
@@ -125,6 +92,22 @@ namespace WebService
             }
 
             return client;
+        }
+
+        private static T Get<T>(string uriString)
+        {
+            T ws;
+
+            using (var httpClient = new HttpClient())
+            {
+                Uri uri = new Uri(uriString);
+
+                var response = httpClient.GetStringAsync(uri).Result;
+
+                ws = JsonConvert.DeserializeObject<T>(response);
+            }
+
+            return ws;
         }
     }
 }

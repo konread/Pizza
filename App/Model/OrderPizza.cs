@@ -14,10 +14,14 @@ namespace Model
             this.Id_Order = Id;
             this.Price = price;
             this.IngredientsOfOrderedPizza = ingredients;
-            if(IngredientsOfOrderedPizza != null)
-            foreach(Ingredient ingredient in IngredientsOfOrderedPizza)
+            this.IngredientsStr = "";
+
+            if (IngredientsOfOrderedPizza != null)
             {
-                this.IngredientsStr += ingredient + ", ";
+                foreach (Ingredient ingredient in IngredientsOfOrderedPizza)
+                {
+                    this.IngredientsStr += ingredient + ", ";
+                }
             }
         }
     }

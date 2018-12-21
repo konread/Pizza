@@ -21,7 +21,6 @@ namespace Restaurateur
 {
     public partial class MainWindow : Window
     {
-
         public MainWindow()
         {
             InitializeComponent();
@@ -44,8 +43,9 @@ namespace Restaurateur
             int index = DgListOrders.Items.IndexOf(DgListOrders.CurrentItem);
 
             List<Order> orders = WebService.Data.GetListOrder();
-            if(index >= 0)
-            WebService.Data.SetOrderStatus(orders[index].Id_Order, status);
+
+            if (index >= 0)
+                WebService.Data.SetOrderStatus(orders[index].Id_Order, status);
         }
     }
 }

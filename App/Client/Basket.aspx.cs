@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Windows;
 
 namespace Client
 {
@@ -32,11 +31,11 @@ namespace Client
             }
         }
 
-        protected void BtnCancelOrder_Click(object sender, EventArgs e)
+        protected void CancelOrder_Click(object sender, EventArgs e)
         {
-            Button btnCancelOrder = (Button) sender;
-
-            int index = Convert.ToInt32(btnCancelOrder.CommandArgument.ToString());
+            Button cancelOrder = (Button) sender;
+            
+            int index = Convert.ToInt32(cancelOrder.CommandArgument.ToString());
 
             List<OrderPizza> listOrdersPizza = Helper.HelperSession.GetListOrdersPizza(Session);
 

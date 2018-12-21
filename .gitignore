@@ -16,3 +16,8 @@ App/Restaurateur/bin/*
 
 App/Service/obj/*
 App/Service/bin/*
+
+Test/.vs/*
+
+Test/Test/obj/*
+Test/Test/bin/*
